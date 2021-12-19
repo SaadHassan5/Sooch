@@ -9,9 +9,11 @@ export class CustomHead1 extends React.Component {
   render() {
     return (
       <View style={{ marginTop: HP(1), flexDirection: 'row', justifyContent: 'center' }}>
-        <TouchableOpacity onPress={this.props.onPressArrow} style={{ position: 'absolute', padding: WP(4), left: WP(4) }}>
-          <SVGS.backArrow />
-        </TouchableOpacity>
+        {this.props.onPressArrow &&
+          <TouchableOpacity onPress={this.props.onPressArrow} style={{ position: 'absolute', padding: WP(4), left: WP(4) }}>
+            <SVGS.backArrow />
+          </TouchableOpacity>
+        }
         <Text style={{ textAlign: 'center', color: palette.black, fontSize: 17, paddingTop: HP(1), fontFamily: fontFamily.bold }}>{this.props.txt}</Text>
         {this.props.save &&
           <TouchableOpacity style={{ position: 'absolute', padding: WP(3), right: WP(4) }}>

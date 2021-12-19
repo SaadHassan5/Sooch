@@ -8,7 +8,7 @@ export const SignupStyles = StyleSheet.create({
         flex:1,
     },
     whiteView:{
-        marginTop:HP(18),
+        marginTop:HP(30),
         backgroundColor:'white',
         flex:1,
         borderTopLeftRadius:WP(7),

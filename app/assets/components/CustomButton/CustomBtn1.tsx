@@ -3,10 +3,15 @@ import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { HP, WP } from '../../config';
 import fontFamily from '../../config/fontFamily';
 
-export interface Props { }
+export interface Props {
+  txt?: any,
+  onPress?: any,
+}
+
 export interface State {
   count: 0,
 }
+
 const Styles = StyleSheet.create({
   shadow: {
     shadowColor: 'black',

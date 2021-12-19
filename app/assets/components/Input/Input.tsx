@@ -3,10 +3,23 @@ import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { palette, WP } from '../../config';
 import fontFamily from '../../config/fontFamily';
 
-export interface Props { }
+export interface Props {
+  password?: any,
+  onChange?: any,
+  value?: any,
+  eye?: any,
+  editable?: any,
+  placeTxt?: any,
+  isEmail?: any,
+  keyboardType?: string,
+  autoCapitalization?: string,
+  onPressIn?: any;
+}
+
 export interface State {
   count: 0,
 }
+
 const Styles = StyleSheet.create({
   inp: {
     fontFamily: fontFamily.regular,
@@ -16,6 +29,7 @@ const Styles = StyleSheet.create({
     borderRadius: WP(4),
     paddingHorizontal: WP(6),
     color:palette.black,
+    height:55,
     // width: '100%',
   }
 })
@@ -26,7 +40,7 @@ export class Input extends React.Component<Props, State> {
         {this.props.password ?
           <TextInput onChangeText={this.props.onChange} secureTextEntry={this.props.eye} textContentType={'password'}  placeholder={this.props.placeTxt} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp,backgroundColor:'white', }} />
           :
-          <TextInput onChangeText={this.props.onChange} value={this.props.value} editable={this.props.editable?false:true} placeholder={this.props.placeTxt} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp,backgroundColor: 'white', }} />
+          <TextInput autoCapitalize='none' onChangeText={this.props.onChange} value={this.props.value} editable={this.props.editable?false:true} placeholder={this.props.placeTxt} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp,backgroundColor: 'white', }} />
         }
       </View>
     );

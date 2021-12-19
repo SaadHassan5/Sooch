@@ -42,9 +42,11 @@ import send from './svgs/send.svg'
 import video from './svgs/video.svg'
 import bulb from './svgs/bulb.svg'
 import plus from './svgs/plus.svg'
+import blood from './svgs/blood.svg'
 
 export const SVGS = {
     sos,
+    blood,
     sheetRect,
     logo,
     backArrow,
@@ -82,11 +84,15 @@ const english = require('./english.png')
 const german = require('./german.png')
 const homeLogo = require('./homeLogo.png')
 const post1 = require('./post1.jpg')
+const soch = require('./soch.png')
+const bloodDonate = require('./bloodDonate.png')
+const moneyDonate = require('./moneyDonate.png')
 
 export const IMAGES = {
     splashBack,
     homeLogo,post1, //home
     french,hebrew,english,german, // Language
     board1,board2,board3, // onBoarding
-    dp,
+    dp,soch,
+    bloodDonate,moneyDonate,
 }

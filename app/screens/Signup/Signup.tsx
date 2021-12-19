@@ -7,13 +7,14 @@ import { IMAGES, SVGS } from '../../assets/imgs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CustomBtn1 } from '../../assets/components/CustomButton/CustomBtn1';
 import { SignupStyles as Styles } from './signup-style';
+import { FireAuth } from '../../Auth/socialAuth';
 
 // export interface Props { }
 // export interface State {
 //     count: 0,
 // }
 
-export class Signup extends React.Component {
+export class Signup extends React.Component<any> {
     state = {
         eye1: true,
         eye2: true,
@@ -21,20 +22,21 @@ export class Signup extends React.Component {
         password: '',
         RepeatPass: '',
         user_name: '',
-        active:false,
+        active: false,
     }
-   async checkRegister() {
+    async checkRegister() {
         if (this.state.email.trim() != '' && this.state.password.trim() != '') {
             if (this.state.password == this.state.RepeatPass) {
-                this.setState({active:true})
                 let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 if (reg.test(this.state.email)) {
+                    this.setState({ active: true })
                     // await Api.Register(this.state.email, this.state.password, this.state.user_name, this.props);
+                   await FireAuth.Signup(this.state.email, this.state.password,this.props)
+                    this.setState({ active: false })
                 }
                 else {
                     this.toastPrompt('Enter Valid Email')
                 }
-                this.setState({active:false})
 
             }
             else {
@@ -66,10 +68,6 @@ export class Signup extends React.Component {
                             <SVGS.email style={{ position: 'absolute', right: WP(5) }} />
                         </View>
                         <View style={{ justifyContent: 'center', width: '100%', marginTop: HP(3), }}>
-                            <Input onChange={(e) => this.setState({ user_name: e })} placeTxt={"Username"} />
-                            <SVGS.userIcon style={{ position: 'absolute', right: WP(5) }} />
-                        </View>
-                        <View style={{ justifyContent: 'center', width: '100%', marginTop: HP(3), }}>
                             <Input onChange={(e) => this.setState({ password: e })} eye={this.state.eye1} password placeTxt={"Password"} />
                             <TouchableOpacity onPress={() => this.setState({ eye1: !this.state.eye1 })} style={{ position: 'absolute', right: WP(5) }} >
                                 {this.state.eye1 ?
@@ -89,20 +87,20 @@ export class Signup extends React.Component {
                                 }
                             </TouchableOpacity>
                         </View>
-                        <View style={{ paddingTop: HP(3) }}>
+                        <View style={{ paddingTop: HP(6) }}>
                             <CustomBtn1 txt={'Sign Up'} onPress={() => this.checkRegister()} />
                         </View>
-                        <TouchableOpacity style={{marginTop:HP(4),paddingVertical:HP(2)}} onPress={() => { this.props.navigation.navigate('Login') }}>
+                        <TouchableOpacity style={{ marginTop: HP(4), paddingVertical: HP(2) }} onPress={() => { this.props.navigation.navigate('Login') }}>
                             <Text style={{ ...Styles.dontTxt }}>Already have an account?<Text style={{ color: '#0118B5' }}> Log In </Text></Text>
                         </TouchableOpacity>
 
                     </View>
                 </ImageBackground>
-                {/* {this.state.active &&
+                {this.state.active &&
                     <View style={{ width: '100%', height: "100%", backgroundColor: 'transparent', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', position: 'absolute', }}>
                         <ActivityIndicator size={"large"} color="#00ff00" />
                     </View>
-                } */}
+                }
             </View>
         )
     }
