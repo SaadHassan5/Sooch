@@ -9,6 +9,8 @@ import { PasswordReset } from '../screens/PasswordReset/PasswordReset';
 import UserInfo from '../screens/UserInfo/userInfo';
 import Add from '../screens/AddCase/add';
 import { TabNavigator } from './tabNavigator';
+import Blood from '../screens/BloodDonation/Blood';
+import Money from '../screens/Money/Money';
 
 const MyStack = createStackNavigator();
 class Stack extends Component {
@@ -21,6 +23,8 @@ class Stack extends Component {
           <MyStack.Screen name="PasswordReset" component={PasswordReset} />
           <MyStack.Screen name="UserInfo" component={UserInfo} />
           <MyStack.Screen name="TabNavigator" component={TabNavigator} />
+          <MyStack.Screen name="Blood" component={Blood} />
+          <MyStack.Screen name="Money" component={Money} />
         </MyStack.Navigator>
     )
   }

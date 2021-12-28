@@ -22,6 +22,8 @@ export function getData(collection: any, doc: any, objectKey?: any) {
       .get()
       .then(function (doc) {
         if (doc.exists) {
+          console.log(doc);
+          
           return doc.data();
         } else {
           return false;
@@ -81,11 +83,34 @@ export async function getDataArray2(collection: any, array: any, id: any) {
   });
   return data;
 }
-
+export async function getDataCase(collection: any,) {
+  let data: any[] = [];
+  let querySnapshot = await firestore().collection(collection).get();
+  querySnapshot.forEach(function (doc) {
+    console.log(doc);
+    
+    if (doc.exists) {
+      data.push(doc.data());
+    } else {
+      console.log('No document found!');
+    }
+  });
+  return data;
+}
 export async function saveData(collection: any, doc: any, jsonObject: any) {
   await firestore()
     .collection(collection)
     .doc(doc)
+    .set(jsonObject, { merge: true })
+    .catch(function (error) {
+      console.error('Error writing document: ', error);
+    });
+  //console.log("Document successfully written!");
+}
+export async function addData(collection: any, doc: any,collection1, jsonObject: any) {
+  await firestore()
+    .collection(collection)
+    .doc(doc).collection(collection1).doc()
     .set(jsonObject, { merge: true })
     .catch(function (error) {
       console.error('Error writing document: ', error);

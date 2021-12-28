@@ -37,15 +37,15 @@ const Styles = StyleSheet.create({
     // marginVertical:HP(0),
   },
   tab: {
-    // position: 'absolute',
+    position: 'absolute',
     backgroundColor: '#B5CEFD',
     left: 20,
     right: 20,
     borderRadius: WP(4),
     // bottom: 15,
-    height: Platform.OS === 'android' ? HP(9) : HP(7),
+    height: HP(9),
     width: WP(90),
-    paddingTop: Platform.OS === 'android' ? 6 : 22,
+    paddingTop: 6,
   },
   icon: {
     marginTop: Platform.OS === 'android' ? -WP(18) : -WP(18),

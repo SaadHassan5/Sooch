@@ -46,6 +46,18 @@ export const InfoStyles = StyleSheet.create({
         fontSize:17,
         fontFamily:fontFamily.regular,
         color:'black'
-    }
+    },
+    
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    nameTxt: {
+        fontFamily: fontFamily.light,
+        fontSize: 13,
+        lineHeight: 19,
+        color: palette.black,
+        // marginTop:HP(2)
+    },
 
 })

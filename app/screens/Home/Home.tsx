@@ -12,6 +12,10 @@ import { ChatComp } from '../../assets/components/SvgComponent/chatComp';
 // import { ChangeBackgroundColor, GetUser } from '../../root/action';
 import { connect } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ChangeBackgroundColor, GetUser } from '../../root/action';
+import { FireAuth } from '../../Auth/socialAuth';
+import { getData } from '../../Auth/fire';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import AsyncStorage from '@react-native-community/async-storage';
 // import alertService from '../../services/alert.service';
 // import { Auth } from '../../auth/socialAuth';
@@ -24,7 +28,13 @@ class Home extends React.Component<any> {
         this.callUser();
     }
     async callUser() {
-        // let res: any = await Api.GetUserProfile();
+        
+      const id = await AsyncStorage.getItem('id');
+      console.log(id);
+      
+        let res: any = await getData("Users",id,false);
+        console.log('res',res);
+        this.props.getUser(res)
         // // console.log('all',res);
 
         // this.props.getUser(res?.data?.data?.user);
@@ -35,14 +45,14 @@ class Home extends React.Component<any> {
             <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1),  }}>
                 <HomeHeader />
                 <ScrollView contentContainerStyle={{ paddingBottom: WP(40), marginTop: HP(6) }}>
-                    <TouchableOpacity style={{...Styles.cardView, ...Styles.shadow }}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Blood')} style={{...Styles.cardView, ...Styles.shadow }}>
                         <Image source={IMAGES.bloodDonate} style={{ ...Styles.img }} />
                         <View style={{ paddingLeft: WP(3) }}>
                             <Text style={{ ...Styles.nameTxt }}>Donate Blood<Text style={{ ...Styles.sharedTxt }}>  </Text></Text>
                             <Text style={{ ...Styles.sharedTxt }}>For Humanity</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{...Styles.cardView, ...Styles.shadow }}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Money')} style={{...Styles.cardView, ...Styles.shadow }}>
                         <Image resizeMode='stretch' source={IMAGES.moneyDonate} style={{ ...Styles.img }} />
                         <View style={{ paddingLeft: WP(3) }}>
                             <Text style={{ ...Styles.nameTxt }}>Donate Money<Text style={{ ...Styles.sharedTxt }}>  </Text></Text>
@@ -54,21 +64,21 @@ class Home extends React.Component<any> {
         );
     }
 }
-// const mapStateToProps = (state: any) => {
-//     const { backgroundColor } = state;
-//     const { user } = state;
-//     // alert(backgroundColor);
-//     // alert(Imgs);
-//     // console.log(backgroundColor);
-//     console.log('Redux User=>', user);
+const mapStateToProps = (state: any) => {
+    const { backgroundColor } = state;
+    const { user } = state;
+    // alert(backgroundColor);
+    // alert(Imgs);
+    // console.log(backgroundColor);
+    console.log('Redux User=>', user);
 
-//     return state;
-// };
-// const mapDispatchToProps = (dispatch: any) => {
-//     return {
-//         changeBackgroundColor: (bg: any) => dispatch(ChangeBackgroundColor(bg)),
-//         getUser: (userInfo: any) => dispatch(GetUser(userInfo)),
-//     }
-// }
-export default Home
-// connect(mapStateToProps, mapDispatchToProps)(Home);
+    return state;
+};
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        changeBackgroundColor: (bg: any) => dispatch(ChangeBackgroundColor(bg)),
+        getUser: (userInfo: any) => dispatch(GetUser(userInfo)),
+    }
+}
+// export default Home
+export default  connect(mapStateToProps, mapDispatchToProps)(Home);

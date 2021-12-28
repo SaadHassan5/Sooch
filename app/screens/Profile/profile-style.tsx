@@ -23,5 +23,9 @@ export const ProfileStyles = StyleSheet.create({
         color:palette.black,
         height:55,
         // width: '100%',
-      }
+      },
+      row: {
+          flexDirection: 'row',
+          alignItems: 'center',
+      },
 })

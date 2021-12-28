@@ -3,7 +3,7 @@ import { ImageBackground, Platform, StyleSheet, Text, View } from 'react-native'
 import { HP, palette, WP } from '../../assets/config';
 import fontFamily from '../../assets/config/fontFamily';
 
-export const BloodStyles = StyleSheet.create({
+export const MoneyStyles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'white',
@@ -29,6 +29,7 @@ export const BloodStyles = StyleSheet.create({
         lineHeight: 17,
         fontFamily: fontFamily.semi_bold,
         color:'black',
+        // marginTop:HP(2)
     },
     row: {
         flexDirection: 'row',
