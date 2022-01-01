@@ -186,4 +186,13 @@ export async function deleteBooking(bookingId: string) {
       });
   });
 }
+export async function getDonors(){
+ await firestore().collection('Users').where('BloodDonar', '!=', true).get().then((users) => {
+   console.log(users);
+   
+    return users;
+}).catch(()=>{
+  return null;
+})
+}
 

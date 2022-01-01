@@ -37,6 +37,7 @@ export const LoginStyles = StyleSheet.create({
         lineHeight:17,
         fontFamily:fontFamily.semi_bold,
         textAlign:'center',
-        paddingTop:HP(3)
+        paddingTop:HP(3),
+        color:"#979797",
     },
 })

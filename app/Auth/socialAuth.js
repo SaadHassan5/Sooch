@@ -66,7 +66,7 @@ const Reset = async (email, props) => {
     .then(() => {
       console.log('Success');
       toastPrompt('Email Sent!' + '\n' + 'Click on recieved email for further process.')
-      props.navigation.goBAck()
+      props.navigation.goBack()
     })
     .catch(error => {
       if (error.code == "auth/user-not-found")

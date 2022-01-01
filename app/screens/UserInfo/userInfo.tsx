@@ -12,46 +12,50 @@ import { InfoStyles as Styles } from './info-style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Checkbox } from 'react-native-paper';
 import { CityModal } from '../../assets/components/Modal/CityModal';
+import { LastModal } from '../../assets/components/Modal/LastModal';
 
 const UserInfo = (props) => {
     const [location, setLocation] = useState("")
     const [locMod, setlocMod] = useState(false)
+    const [lastMod, setLastMod] = useState(false)
     const [flag, setFlag] = useState('🇵🇰')
     const [gender, setGender] = useState('Male')
     const [phone, setPhone] = useState('')
     const [first, setFirst] = useState('')
     const [last, setLast] = useState('')
     const [blood, setBlood] = useState('')
+    const [bloodDur, setBloodDur] = useState('Never Donated')
     const [active, setActive] = useState(false)
     const [genderMod, setGenderMod] = useState(false)
     const [dialCode, setDialCode] = useState('92')
     const [mark, setMark] = useState(true);
     const onUpdate = async () => {
-        if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim()!="") {
+        if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim() != "") {
             setActive(true)
             const id = await AsyncStorage.getItem('id');
             await saveData("Users", id, {
                 gender: gender,
-                Name: first +" "+ last,
+                Name: first + " " + last,
                 BloodGroup: blood,
                 Phone: phone,
                 BloodDonar: mark,
-                Location:location,
+                Location: location,
+                LastDonated:bloodDur
             })
             setActive(false)
             props.navigation.replace("TabNavigator")
         }
         else
-        toastPrompt("Enter required data!!!")
+            toastPrompt("Enter required data!!!")
     }
-    
-const toastPrompt = (msg) => {
-    if (Platform.OS === 'android') {
-        ToastAndroid.show(msg, ToastAndroid.SHORT)
-    } else {
-        // alert(msg);
+
+    const toastPrompt = (msg) => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(msg, ToastAndroid.SHORT)
+        } else {
+            // alert(msg);
+        }
     }
-}
     return (
         <SafeAreaView style={{ ...Styles.container }}>
             <ScrollView>
@@ -89,23 +93,33 @@ const toastPrompt = (msg) => {
                         </View>
                     </View>
                     <View style={{ width: '100%', marginTop: HP(3), }}>
+                        <Text style={{ ...Styles.firstTxt }}>Last Time Donated Blood</Text>
+                        <Pressable onPress={() => setLastMod(true)} style={{ justifyContent: 'center', marginTop: HP(1) }}>
+                            <Input value={bloodDur} editable placeTxt={"Blood Dur"} />
+                            <SVGS.downArrow style={{ position: 'absolute', right: WP(5) }} />
+                        </Pressable>
+                    </View>
+                    <View style={{ width: '100%', marginTop: HP(3), }}>
                         <Text style={{ ...Styles.firstTxt }}>Gender</Text>
                         <Pressable onPress={() => setGenderMod(true)} style={{ justifyContent: 'center', marginTop: HP(1) }}>
                             <Input value={gender} editable placeTxt={"Gender"} />
                             <SVGS.downArrow style={{ position: 'absolute', right: WP(5) }} />
                         </Pressable>
                     </View>
-                    <Pressable onPress={()=>setlocMod(true)} style={{ marginTop: HP(2),justifyContent:'center' }}>
-                        <Input editable value={location} onChange={(e) => setLocation(e)} placeTxt={"Enter Location"} />
-                        <SVGS.downArrow style={{ position: 'absolute', right: WP(10), }} />
-                    </Pressable>
+                    <View style={{ width: '100%', marginTop: HP(3), }}>
+                        <Text style={{ ...Styles.firstTxt }}>Location</Text>
+                        <Pressable onPress={() => setlocMod(true)} style={{ justifyContent: 'center', marginTop: HP(1)}}>
+                            <Input editable value={location} onChange={(e) => setLocation(e)} placeTxt={"Enter Location"} />
+                            <SVGS.downArrow style={{ position: 'absolute', right: WP(5), }} />
+                        </Pressable>
+                    </View>
                     <TouchableOpacity onPress={() => setMark(!mark)} style={{ ...Styles.row, marginTop: HP(2) }}>
                         <Checkbox
                             status={mark ? 'checked' : 'unchecked'}
                             uncheckedColor='red'
                             color='#B7C1DF'
                         />
-                        <Text style={{ ...Styles.firstTxt }}>Mark yourself as available blood donar</Text>
+                        <Text style={{ ...Styles.firstTxt }}>Mark yourself as available blood donor</Text>
                     </TouchableOpacity>
                     <View style={{ width: '100%', alignSelf: 'center', marginTop: HP(8) }}>
                         <CustomBtn1 txt={'Update'} onPress={() => onUpdate()} />
@@ -120,7 +134,8 @@ const toastPrompt = (msg) => {
                 </View>
             }
             <GenderModal mod={genderMod} gender={gender} onPress={() => setGenderMod(false)} onPressMale={() => setGender('Male')} onPressFemale={() => setGender('Female')} onPressOther={() => setGender('Other')} />
-            <CityModal mod={locMod} setLocation={setLocation} Location={location}  onPress={()=>setlocMod(false)} setMod={setlocMod}/>
+            <CityModal mod={locMod} setLocation={setLocation} Location={location} onPress={() => setlocMod(false)} setMod={setlocMod} />
+            <LastModal mod={lastMod} blood={bloodDur} onPress={() => setLastMod(false)} onPress1={() => setBloodDur('3 Months or before')} onPress2={() => setBloodDur('Less than 3 Months ago')} onPressOther={() => setBloodDur('Never Donated')}/>
         </SafeAreaView>
     )
 }

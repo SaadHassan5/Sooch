@@ -13,6 +13,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { PlusTab } from '../assets/components/SvgComponent/plusTab';
 import Add from '../screens/AddCase/add';
 import Profile from '../screens/Profile/profile';
+import { SearchComp } from '../assets/components/SvgComponent/SearchComp';
+import See from '../screens/See/See';
 const Tab = createBottomTabNavigator();
 const Styles = StyleSheet.create({
 
@@ -119,6 +121,15 @@ export class TabNavigator extends Component<any> {
                 <View style={{ ...Styles.iconView }}>
                   <PlusTab col={focused ? '#0118B5' : 'white'} />
                   <Text style={{ ...Styles.txt, color: focused ? '#0118B5' : 'white' }}>Add Your Case</Text>
+                </View>
+              ),
+            }} />
+            <Tab.Screen name="See" component={See}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View style={{ ...Styles.iconView }}>
+                  <SearchComp col={focused ? '#0118B5' : 'white'} />
+                  <Text style={{ ...Styles.txt, color: focused ? '#0118B5' : 'white' }}>Available</Text>
                 </View>
               ),
             }} />

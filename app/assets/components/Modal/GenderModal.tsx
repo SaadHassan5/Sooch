@@ -66,7 +66,7 @@ export class GenderModal extends React.Component {
                         </View>
                     </View>
                 </View> */}
-                <View style={{ width: '80%', alignSelf: 'center', height: HP(30), backgroundColor: 'white' }}>
+                <View style={{ width: '80%', alignSelf: 'center', height: HP(32), backgroundColor: 'white' }}>
                     <View style={{ paddingHorizontal: WP(6) }}>
                         <Text style={{ ...Styles.genTxt, marginTop: HP(1), paddingLeft: WP(2) }}>Choose Your Gender</Text>
                         <TouchableOpacity onPress={this.props.onPressFemale} style={{ ...Styles.row, marginTop: HP(2) }}>

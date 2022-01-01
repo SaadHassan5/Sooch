@@ -24,6 +24,8 @@ const Add = (props) => {
     const [phone, setPhone] = useState("")
     const [blood, setBlood] = useState("Any")
     const [money, setMoney] = useState("")
+    const [account, setAccount] = useState("")
+    const [accountName, setAccountName] = useState("")
     const [bottles, setBottles] = useState(1)
     const [desc, setDesc] = useState("")
     const toastPrompt = (msg) => {
@@ -35,7 +37,7 @@ const Add = (props) => {
     }
     const onPost = async () => {
 
-        setDonMod(true)
+        // setDonMod(true)
         if (name.trim() != "" && phone.trim() != "" && desc.trim()) {
             let obj;
             if (need == "Blood") {
@@ -55,6 +57,8 @@ const Add = (props) => {
                     Phone: phone,
                     Need: need,
                     Money: money,
+                    AccountName: accountName,
+                    Account: account,
                     Description: desc,
                     Location: location,
                 }
@@ -74,8 +78,10 @@ const Add = (props) => {
             await saveData("Cases", "", obj);
             setActive(false)
             toastPrompt("Posted !!")
-            if (need == 'Blood')
+            if (need == 'Blood') {
                 setDonMod(true)
+
+            }
         }
         else {
             toastPrompt("Enter Name, Phone Number & Description")
@@ -111,8 +117,16 @@ const Add = (props) => {
                         </View>
                     }
                     {need == "Money" &&
-                        <View style={{ marginTop: HP(2) }}>
-                            <Input onChange={(e) => setMoney(e)} placeTxt={"Enter Amount"} />
+                        <View>
+                            <View style={{ marginTop: HP(2) }}>
+                                <Input onChange={(e) => setMoney(e)} placeTxt={"Enter Amount"} />
+                            </View>
+                            <View style={{ marginTop: HP(2) }}>
+                                <Input onChange={(e) => setAccountName(e)} placeTxt={"Account Name"} />
+                            </View>
+                            <View style={{ marginTop: HP(2) }}>
+                                <Input onChange={(e) => setAccount(e)} placeTxt={"Enter Account Number"} />
+                            </View>
                         </View>
                     }
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(3) }}>Location<Text style={{ color: 'red' }}>*</Text></Text>

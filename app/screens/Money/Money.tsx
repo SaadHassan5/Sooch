@@ -6,7 +6,7 @@ import { MoneyStyles as Styles } from './money-style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { CustomHead1 } from '../../assets/components/CustomHeader/CustomHead1';
-import { HP } from '../../assets/config';
+import { HP, WP } from '../../assets/config';
 import fontFamily from '../../assets/config/fontFamily';
 import { SVGS } from '../../assets/imgs';
 
@@ -17,14 +17,14 @@ const Money = (props) => {
         getCase();
     }, [])
     const getCase = async () => {
-        let exi=false;
+        let exi = false;
         const id = await AsyncStorage.getItem("id");
         console.log("id", id);
         const res = await getDataCase("Cases")
         console.log(res);
-        await res.filter(e=>{
-            if(e.Need=="Money")
-            exi=true
+        await res.filter(e => {
+            if (e.Need == "Money")
+                exi = true
         })
         setExist(exi)
         setData(res);
@@ -33,7 +33,7 @@ const Money = (props) => {
         <SafeAreaView style={{ ...Styles.container }}>
             <CustomHead1 txt={"Money Needs"} onPressArrow={() => { props.navigation.goBack() }} />
             {!exist ?
-                <Text style={{...Styles.feedTxt,alignSelf:'center',marginTop:HP(40)}}>No Record Found</Text>
+                <Text style={{ ...Styles.feedTxt, alignSelf: 'center', marginTop: HP(40) }}>No Record Found</Text>
                 :
                 <ScrollView contentContainerStyle={{ paddingBottom: HP(10) }}>
                     {data?.map((item, i) =>
@@ -46,6 +46,14 @@ const Money = (props) => {
                                     </View>
                                     <View style={{ ...Styles.row, justifyContent: 'space-between' }}>
                                         <Text style={{ ...Styles.nameTxt }}>Money Required: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item.Money}</Text></Text>
+                                    </View>
+                                    <View style={{}}>
+                                        {item.AccountName &&
+                                        <Text style={{ ...Styles.nameTxt }}>Account Name: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item.AccountName}</Text></Text>
+                                        }
+                                        {item.Account&&
+                                            <Text style={{ ...Styles.nameTxt }}>Account No: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item.Account}</Text></Text>
+                                        }
                                     </View>
                                     <View style={{ ...Styles.row, }}>
                                         <SVGS.location width={WP(4)} height={WP(4)} style={{ marginTop: HP(2) }} />
