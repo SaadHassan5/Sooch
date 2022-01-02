@@ -51,6 +51,7 @@ export class LastModal extends React.Component {
                             <RadioButton
                                 status={this.props.blood == '3 Months or before' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPress1}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>3 Months or before</Text>
                         </TouchableOpacity>
@@ -58,7 +59,7 @@ export class LastModal extends React.Component {
                             <RadioButton
                                 status={this.props.blood == 'Less than 3 Months ago' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
-                                
+                                onPress={this.props.onPress2}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Less than 3 Months ago</Text>
                         </TouchableOpacity>
@@ -66,6 +67,7 @@ export class LastModal extends React.Component {
                             <RadioButton
                                 status={this.props.blood == 'Never Donated' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressOther}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Never Donated</Text>
                         </TouchableOpacity>

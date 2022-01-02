@@ -17,7 +17,7 @@ export const CityModal = ({ mod, setLocation, Location, onPress,setMod }) => {
         // this.setState({searchText: searchText});
       
         let filteredData = cities.filter(function (item) {
-          return item.name.toLowerCase().includes(searchText.toLowerCase());
+          return item.name.toLowerCase().includes(searchText?.toLowerCase());
         });
       
         // this.setState({filteredData: filteredData});
@@ -26,7 +26,7 @@ export const CityModal = ({ mod, setLocation, Location, onPress,setMod }) => {
     return (
         <ReactNativeModal isVisible={mod} onBackButtonPress={onPress} onBackdropPress={onPress}>
             <View style={{ width: "90%", height: HP(60), backgroundColor: 'white', alignSelf: 'center', borderRadius: WP(4), paddingHorizontal: WP(5), paddingTop: HP(2) }}>
-                <TextInput onChangeText={(e) => search(e)} placeholder={"Search City"} style={{ borderWidth: .5, height: HP(6),borderRadius:WP(3),paddingHorizontal:WP(5),borderColor:palette.maalta,fontFamily:fontFamily.light,paddingBottom:HP(2),color:'black'}} />
+                <TextInput onChangeText={(e) => search(e)} placeholder={"Search City"} placeholderTextColor={'grey'} style={{ borderWidth: .5, height: HP(6),borderRadius:WP(3),paddingHorizontal:WP(5),borderColor:palette.maalta,fontFamily:fontFamily.light,paddingBottom:HP(2),color:'black'}} />
                 <FlatList
                     // padding={30}
                     numColumns={1}

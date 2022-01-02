@@ -58,7 +58,7 @@ export const HomeStyles = StyleSheet.create({
     },
     img: {
         width: '100%',
-        height: HP(22),
+        height: HP(15),
         borderTopLeftRadius: WP(4),
         borderTopRightRadius: WP(4),
         marginTop: WP(2),
@@ -89,9 +89,9 @@ export const HomeStyles = StyleSheet.create({
     },
     cardView: {
         backgroundColor: 'white',
-        marginTop: HP(1),
+        marginTop: HP(3),
         padding: WP(3),
         borderRadius: WP(4),
-        marginHorizontal: WP(7)
+        marginHorizontal: WP(10)
     }
 })

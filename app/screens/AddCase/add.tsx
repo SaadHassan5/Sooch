@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addData, saveData } from '../../Auth/fire';
 import { CityModal } from '../../assets/components/Modal/CityModal';
 import { DonorList } from '../../assets/components/Modal/DonorList';
+import AlertService from '../../Services/alertService';
 
 const Add = (props) => {
     const [need, setNeed] = useState("Blood")
@@ -40,48 +41,54 @@ const Add = (props) => {
         // setDonMod(true)
         if (name.trim() != "" && phone.trim() != "" && desc.trim()) {
             let obj;
-            if (need == "Blood") {
-                obj = {
-                    Name: name,
-                    Phone: phone,
-                    Need: need,
-                    BloodGroup: blood,
-                    Bottles: bottles,
-                    Description: desc,
-                    Location: location,
-                }
-            }
-            else if (need == "Money") {
-                obj = {
-                    Name: name,
-                    Phone: phone,
-                    Need: need,
-                    Money: money,
-                    AccountName: accountName,
-                    Account: account,
-                    Description: desc,
-                    Location: location,
-                }
-            }
-            else {
-                obj = {
-                    Name: name,
-                    Phone: phone,
-                    Need: need,
-                    Description: desc,
-                    Location: location,
-                }
+            AlertService.confirm("Press OK to post this case!!").then(async (res) => {
+                if (res) {
+                    if (need == "Blood") {
+                        obj = {
+                            Name: name,
+                            Phone: phone,
+                            Need: need,
+                            BloodGroup: blood,
+                            Bottles: bottles,
+                            Description: desc,
+                            Location: location,
+                        }
+                    }
+                    else if (need == "Money") {
+                        obj = {
+                            Name: name,
+                            Phone: phone,
+                            Need: need,
+                            Money: money,
+                            AccountName: accountName,
+                            Account: account,
+                            Description: desc,
+                            Location: location,
+                        }
+                    }
 
-            }
-            setActive(true)
-            const id = await AsyncStorage.getItem('id');
-            await saveData("Cases", "", obj);
-            setActive(false)
-            toastPrompt("Posted !!")
-            if (need == 'Blood') {
-                setDonMod(true)
 
-            }
+                    else {
+                        obj = {
+                            Name: name,
+                            Phone: phone,
+                            Need: need,
+                            Description: desc,
+                            Location: location,
+                        }
+
+                    }
+                    setActive(true)
+                    const id = await AsyncStorage.getItem('id');
+                    await saveData("Cases", "", obj);
+                    setActive(false)
+                    toastPrompt("Posted !!")
+                    if (need == 'Blood') {
+                        setDonMod(true)
+
+                    }
+                }
+            })
         }
         else {
             toastPrompt("Enter Name, Phone Number & Description")
@@ -136,7 +143,7 @@ const Add = (props) => {
                     </Pressable>
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(3) }}>Case Description</Text>
                     <View style={{ marginTop: HP(2) }}>
-                        <TextInput multiline={true} onChangeText={(e) => setDesc(e)} style={{ ...Styles.inp, height: HP(30) }} placeholder={'Description'} />
+                        <TextInput multiline={true} placeholderTextColor={"#B7C1DF"} onChangeText={(e) => setDesc(e)} style={{ ...Styles.inp, height: HP(30), color: 'black' }} placeholder={'Description'} />
                     </View>
 
                     <View style={{ marginTop: HP(5) }}>

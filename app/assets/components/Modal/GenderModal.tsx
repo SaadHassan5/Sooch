@@ -73,6 +73,7 @@ export class GenderModal extends React.Component {
                             <RadioButton
                                 status={this.props.gender == 'Female' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressFemale}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Female</Text>
                         </TouchableOpacity>
@@ -80,6 +81,7 @@ export class GenderModal extends React.Component {
                             <RadioButton
                                 status={this.props.gender == 'Male' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressMale}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Male</Text>
                         </TouchableOpacity>
@@ -87,6 +89,7 @@ export class GenderModal extends React.Component {
                             <RadioButton
                                 status={this.props.gender == 'Other' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressOther}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Other</Text>
                         </TouchableOpacity>

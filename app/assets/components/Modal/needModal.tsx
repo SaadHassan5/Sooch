@@ -51,6 +51,7 @@ export class NeedModal extends React.Component {
                             <RadioButton
                                 status={this.props.need == 'Blood' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressBlood}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Blood</Text>
                         </TouchableOpacity>
@@ -58,6 +59,7 @@ export class NeedModal extends React.Component {
                             <RadioButton
                                 status={this.props.need == 'Money' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressMoney}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Money</Text>
                         </TouchableOpacity>
@@ -65,6 +67,7 @@ export class NeedModal extends React.Component {
                             <RadioButton
                                 status={this.props.need == 'Other' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
+                                onPress={this.props.onPressOther}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Other</Text>
                         </TouchableOpacity>

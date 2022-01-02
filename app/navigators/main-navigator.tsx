@@ -11,6 +11,8 @@ import Add from '../screens/AddCase/add';
 import { TabNavigator } from './tabNavigator';
 import Blood from '../screens/BloodDonation/Blood';
 import Money from '../screens/Money/Money';
+import Counselling from '../screens/Counselling/counselling';
+import Medical from '../screens/Medical/medical';
 
 const MyStack = createStackNavigator();
 class Stack extends Component {
@@ -25,6 +27,8 @@ class Stack extends Component {
           <MyStack.Screen name="TabNavigator" component={TabNavigator} />
           <MyStack.Screen name="Blood" component={Blood} />
           <MyStack.Screen name="Money" component={Money} />
+          <MyStack.Screen name="Counselling" component={Counselling} />
+          <MyStack.Screen name="Medical" component={Medical} />
         </MyStack.Navigator>
     )
   }
