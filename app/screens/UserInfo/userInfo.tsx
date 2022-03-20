@@ -10,7 +10,7 @@ import { SVGS } from '../../assets/imgs';
 import { saveData } from '../../Auth/fire';
 import { InfoStyles as Styles } from './info-style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, RadioButton } from 'react-native-paper';
 import { CityModal } from '../../assets/components/Modal/CityModal';
 import { LastModal } from '../../assets/components/Modal/LastModal';
 
@@ -29,6 +29,7 @@ const UserInfo = (props) => {
     const [genderMod, setGenderMod] = useState(false)
     const [dialCode, setDialCode] = useState('92')
     const [mark, setMark] = useState(true);
+    const [disease, setDisease] = useState(true);
     const onUpdate = async () => {
         if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim() != "") {
             setActive(true)
@@ -40,7 +41,8 @@ const UserInfo = (props) => {
                 Phone: phone,
                 BloodDonar: mark,
                 Location: location,
-                LastDonated:bloodDur
+                LastDonated: bloodDur,
+                disease:disease,
             })
             setActive(false)
             props.navigation.replace("TabNavigator")
@@ -86,6 +88,20 @@ const UserInfo = (props) => {
                         </View>
                     </View>
                     <View style={{ width: '100%', marginTop: HP(3), }}>
+                        <Text style={{ ...Styles.firstTxt }}>Gender</Text>
+                        <Pressable onPress={() => setGenderMod(true)} style={{ justifyContent: 'center', marginTop: HP(1) }}>
+                            <Input value={gender} editable placeTxt={"Gender"} />
+                            <SVGS.downArrow style={{ position: 'absolute', right: WP(5) }} />
+                        </Pressable>
+                    </View>
+                    <View style={{ width: '100%', marginTop: HP(3), }}>
+                        <Text style={{ ...Styles.firstTxt }}>Location</Text>
+                        <Pressable onPress={() => setlocMod(true)} style={{ justifyContent: 'center', marginTop: HP(1) }}>
+                            <Input editable value={location} onChange={(e) => setLocation(e)} placeTxt={"Enter Location"} />
+                            <SVGS.downArrow style={{ position: 'absolute', right: WP(5), }} />
+                        </Pressable>
+                    </View>
+                    <View style={{ width: '100%', marginTop: HP(3), }}>
                         <Text style={{ ...Styles.firstTxt }}>Blood Group<Text style={{ color: 'red' }}>*</Text></Text>
                         <View style={{ justifyContent: 'center', marginTop: HP(1) }}>
                             <Input onChange={(e) => setBlood(e)} placeTxt={"Blood Group"} />
@@ -99,19 +115,16 @@ const UserInfo = (props) => {
                             <SVGS.downArrow style={{ position: 'absolute', right: WP(5) }} />
                         </Pressable>
                     </View>
-                    <View style={{ width: '100%', marginTop: HP(3), }}>
-                        <Text style={{ ...Styles.firstTxt }}>Gender</Text>
-                        <Pressable onPress={() => setGenderMod(true)} style={{ justifyContent: 'center', marginTop: HP(1) }}>
-                            <Input value={gender} editable placeTxt={"Gender"} />
-                            <SVGS.downArrow style={{ position: 'absolute', right: WP(5) }} />
-                        </Pressable>
-                    </View>
-                    <View style={{ width: '100%', marginTop: HP(3), }}>
-                        <Text style={{ ...Styles.firstTxt }}>Location</Text>
-                        <Pressable onPress={() => setlocMod(true)} style={{ justifyContent: 'center', marginTop: HP(1)}}>
-                            <Input editable value={location} onChange={(e) => setLocation(e)} placeTxt={"Enter Location"} />
-                            <SVGS.downArrow style={{ position: 'absolute', right: WP(5), }} />
-                        </Pressable>
+                    <Text style={{ ...Styles.firstTxt,marginTop:HP(2)}}>Do you have any disease?</Text>
+                    <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-evenly" }}>
+                        <TouchableOpacity onPress={()=>{setDisease(true)}} style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Text style={{ ...Styles.firstTxt }}>Yes</Text>
+                            <RadioButton status={disease?'checked':"unchecked"} onPress={()=>{setDisease(true)}} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{setDisease(false)}} style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Text style={{ ...Styles.firstTxt }}>No</Text>
+                            <RadioButton status={disease?'unchecked':"checked"} onPress={()=>{setDisease(false)}} />
+                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => setMark(!mark)} style={{ ...Styles.row, marginTop: HP(2) }}>
                         <Checkbox
@@ -135,7 +148,7 @@ const UserInfo = (props) => {
             }
             <GenderModal mod={genderMod} gender={gender} onPress={() => setGenderMod(false)} onPressMale={() => setGender('Male')} onPressFemale={() => setGender('Female')} onPressOther={() => setGender('Other')} />
             <CityModal mod={locMod} setLocation={setLocation} Location={location} onPress={() => setlocMod(false)} setMod={setlocMod} />
-            <LastModal mod={lastMod} blood={bloodDur} onPress={() => setLastMod(false)} onPress1={() => setBloodDur('3 Months or before')} onPress2={() => setBloodDur('Less than 3 Months ago')} onPressOther={() => setBloodDur('Never Donated')}/>
+            <LastModal mod={lastMod} blood={bloodDur} onPress={() => setLastMod(false)} onPress1={() => setBloodDur('3 Months or before')} onPress2={() => setBloodDur('Less than 3 Months ago')} onPressOther={() => setBloodDur('Never Donated')} />
         </SafeAreaView>
     )
 }

@@ -3,10 +3,16 @@ import { ImageBackground, Platform, StyleSheet, Text, View } from 'react-native'
 import { HP, palette, WP } from '../../assets/config';
 import fontFamily from '../../assets/config/fontFamily';
 
-export const AddStyles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:"#ffff"
+export const VolunteerStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: palette.white,
+    },
+    feedTxt: {
+        fontSize: 14,
+        lineHeight: 17,
+        fontFamily: fontFamily.semi_bold,
+        color:'black'
     },
     nameTxt:{
         fontFamily:fontFamily.semi_bold,
@@ -21,6 +27,7 @@ export const AddStyles = StyleSheet.create({
         borderRadius: WP(4),
         paddingHorizontal: WP(6),
         color:palette.black,
+        height:55,
         // width: '100%',
       }
 })

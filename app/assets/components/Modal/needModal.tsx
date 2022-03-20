@@ -44,7 +44,7 @@ export class NeedModal extends React.Component {
         return (
             <ReactNativeModal isVisible={this.props.mod} onBackdropPress={this.props.onPress} onBackButtonPress={this.props.onPress} style={{  }}>
               
-                <View style={{ width: '80%', alignSelf: 'center', height: HP(30), backgroundColor: 'white' }}>
+                <View style={{ width: '80%', alignSelf: 'center', height: HP(37), backgroundColor: 'white' }}>
                     <View style={{ paddingHorizontal: WP(6) }}>
                         <Text style={{ ...Styles.genTxt, marginTop: HP(1), paddingLeft: WP(2) }}>Choose Your Need</Text>
                         <TouchableOpacity onPress={this.props.onPressBlood} style={{ ...Styles.row, marginTop: HP(2) }}>
@@ -62,6 +62,14 @@ export class NeedModal extends React.Component {
                                 onPress={this.props.onPressMoney}
                             />
                             <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Money</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.props.onPressEdu} style={{ ...Styles.row, marginTop: HP(1.5) }}>
+                            <RadioButton
+                                status={this.props.need == 'Education' ? 'checked' : 'unchecked'}
+                                color={'#673AB7'}
+                                onPress={this.props.onPressEdu}
+                            />
+                            <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Education</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.props.onPressOther} style={{ ...Styles.row, marginTop: HP(1.5) }}>
                             <RadioButton

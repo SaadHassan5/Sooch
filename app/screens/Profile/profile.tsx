@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, ImageBackground, Platform, SafeAreaView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { CustomBtn1 } from '../../assets/components/CustomButton/CustomBtn1';
 import { CustomHead1 } from '../../assets/components/CustomHeader/CustomHead1';
 import { Input } from '../../assets/components/Input/Input';
@@ -67,6 +67,7 @@ const Profile = (props) => {
     return (
         <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1) }}>
             <CustomHead1 onPressArrow={() => props.navigation.goBack()} txt={"Profile"} />
+            <ScrollView style={{}} showsVerticalScrollIndicator={false}>
             <View style={{ flex: 1, paddingHorizontal: WP(6), marginTop: HP(5) }}>
                 <Text style={{ ...Styles.nameTxt, }}>Name</Text>
                 <View style={{ marginTop: HP(2) }}>
@@ -96,6 +97,7 @@ const Profile = (props) => {
                     <CustomBtn1 onPress={() => Logout()} txt={"Logout"} />
                 </View>
             </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }

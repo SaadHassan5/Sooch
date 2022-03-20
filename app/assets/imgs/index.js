@@ -45,12 +45,14 @@ export const SVGS = {
 }
 
 const splashBack = require('./splashback.png')
+const student = require('./student.jpg')
 // const homeLogo = require('./homeLogo.png')
 const soch = require('./soch.png')
 const bloodDonate = require('./bloodDonate.jpg')
 const moneyDonate = require('./moneyDonate.jpg')
 const counselling = require('./counselling.jpg')
 const medical = require('./medical.jpg')
+const volunteer = require('./volunteer.jpg')
 
 export const IMAGES = {
     splashBack,
@@ -58,4 +60,6 @@ export const IMAGES = {
     soch,
     bloodDonate, moneyDonate,
     counselling,
+    student,
+    volunteer
 }

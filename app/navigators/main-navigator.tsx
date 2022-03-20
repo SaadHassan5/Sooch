@@ -13,6 +13,8 @@ import Blood from '../screens/BloodDonation/Blood';
 import Money from '../screens/Money/Money';
 import Counselling from '../screens/Counselling/counselling';
 import Medical from '../screens/Medical/medical';
+import StudentHelp from '../screens/StudentHelp/StudentHelp';
+import Volunteer from '../screens/Volunteer/volunteer';
 
 const MyStack = createStackNavigator();
 class Stack extends Component {
@@ -29,6 +31,8 @@ class Stack extends Component {
           <MyStack.Screen name="Money" component={Money} />
           <MyStack.Screen name="Counselling" component={Counselling} />
           <MyStack.Screen name="Medical" component={Medical} />
+          <MyStack.Screen name="StudentHelp" component={StudentHelp} />
+          <MyStack.Screen name="Volunteer" component={Volunteer} />
         </MyStack.Navigator>
     )
   }

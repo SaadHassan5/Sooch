@@ -38,7 +38,7 @@ export class Input extends React.Component<Props, State> {
     return (
       <View>
         {this.props.password ?
-          <TextInput onChangeText={this.props.onChange} secureTextEntry={this.props.eye} textContentType={'password'}  placeholder={this.props.placeTxt} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp,backgroundColor:'white', }} />
+          <TextInput autoCapitalize='none' onChangeText={this.props.onChange} secureTextEntry={this.props.eye} textContentType={'password'}  placeholder={this.props.placeTxt} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp,backgroundColor:'white', }} />
           :
           <TextInput autoCapitalize='none' keyboardType={this.props.keyboardType}  onChangeText={this.props.onChange} value={this.props.value} editable={this.props.editable?false:true} placeholder={this.props.placeTxt} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp,backgroundColor: 'white', }} />
         }

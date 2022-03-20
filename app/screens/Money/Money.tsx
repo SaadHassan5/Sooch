@@ -45,21 +45,21 @@ const Money = (props) => {
                                         <Text style={{ ...Styles.feedTxt }}>{item.Phone}</Text>
                                     </View>
                                     <View style={{ ...Styles.row, justifyContent: 'space-between' }}>
-                                        <Text style={{ ...Styles.nameTxt }}>Money Required: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item.Money}</Text></Text>
+                                        <Text style={{ ...Styles.nameTxt }}>Money Required: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.Money}</Text></Text>
                                     </View>
                                     <View style={{}}>
                                         {item.AccountName &&
-                                        <Text style={{ ...Styles.nameTxt }}>Account Name: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item.AccountName}</Text></Text>
+                                        <Text style={{ ...Styles.nameTxt }}>Account Name: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.AccountName}</Text></Text>
                                         }
                                         {item.Account&&
-                                            <Text style={{ ...Styles.nameTxt }}>Account No: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item.Account}</Text></Text>
+                                            <Text style={{ ...Styles.nameTxt }}>Account No: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.Account}</Text></Text>
                                         }
                                     </View>
                                     <View style={{ ...Styles.row, }}>
                                         <SVGS.location width={WP(4)} height={WP(4)} style={{ marginTop: HP(2) }} />
-                                        <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold, paddingLeft: WP(3) }}>{item.Location}</Text>
+                                        <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold, paddingLeft: WP(3) }}>{item?.district}</Text>
                                     </View>
-                                    <Text style={{ ...Styles.nameTxt }}>{item.Description}</Text>
+                                    <Text style={{ ...Styles.nameTxt }}>{item?.Description}</Text>
                                 </View>
                             }
                         </View>

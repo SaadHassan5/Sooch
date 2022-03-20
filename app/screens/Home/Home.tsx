@@ -39,6 +39,13 @@ class Home extends React.Component<any> {
             <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1), }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: WP(40), marginTop: HP(1) }}>
                     <HomeHeader />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Volunteer')} style={{ ...Styles.cardView, ...Styles.shadow }}>
+                        <Image resizeMode='contain' source={IMAGES.volunteer} style={{ ...Styles.img }} />
+                        <View style={{ paddingLeft: WP(3) }}>
+                            <Text style={{ ...Styles.nameTxt }}>Be a Volunteer<Text style={{ ...Styles.sharedTxt }}>  </Text></Text>
+                            <Text style={{ ...Styles.sharedTxt }}>Lets get together</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Medical')} style={{ ...Styles.cardView, ...Styles.shadow }}>
                         <Image resizeMode='contain' source={IMAGES.medical} style={{ ...Styles.img }} />
                         <View style={{ paddingLeft: WP(3) }}>
@@ -58,6 +65,13 @@ class Home extends React.Component<any> {
                         <View style={{ paddingLeft: WP(3) }}>
                             <Text style={{ ...Styles.nameTxt }}>Donate Money<Text style={{ ...Styles.sharedTxt }}>  </Text></Text>
                             <Text style={{ ...Styles.sharedTxt }}>Single penny will be appreciated</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('StudentHelp')} style={{ ...Styles.cardView, ...Styles.shadow }}>
+                        <Image resizeMode='stretch' source={IMAGES.student} style={{ ...Styles.img }} />
+                        <View style={{ paddingLeft: WP(3) }}>
+                            <Text style={{ ...Styles.nameTxt }}>Students Help<Text style={{ ...Styles.sharedTxt }}>  </Text></Text>
+                            <Text style={{ ...Styles.sharedTxt }}>Help our Future</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Counselling')} style={{ ...Styles.cardView, ...Styles.shadow }}>
