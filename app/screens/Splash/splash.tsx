@@ -10,16 +10,29 @@ export class Splash extends React.Component {
         active: false,
     }
     componentDidMount() {
+        this.checkVolunteer();
         setTimeout(() => {
             console.log('saad');
             this.checkExistedUser();
         }, 1000)
     }
+    async checkVolunteer(){
+        try {
+            const value = await AsyncStorage.getItem('Date')
+            if (value !== null) {
+                if(value!=new Date().toDateString())
+                await AsyncStorage.setItem("VolunteerModal","No");
+            }
+            else {
+                }
+        } catch (e) {
+            // error reading value
+        }
+    }
     async checkExistedUser() {
-
+       await AsyncStorage.setItem("Date",new Date().toDateString())
         try {
             const value = await AsyncStorage.getItem('User')
-            console.log('milaa', value);
             if (value !== null) {
                 this.props.navigation.replace('TabNavigator')
             }

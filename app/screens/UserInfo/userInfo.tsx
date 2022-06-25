@@ -13,7 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Checkbox, RadioButton } from 'react-native-paper';
 import { CityModal } from '../../assets/components/Modal/CityModal';
 import { LastModal } from '../../assets/components/Modal/LastModal';
-
+import DocumentPicker from "react-native-document-picker";
+import storage from '@react-native-firebase/storage';
+import UploadIcon from "react-native-vector-icons/MaterialIcons"
 const UserInfo = (props) => {
     const [location, setLocation] = useState("")
     const [locMod, setlocMod] = useState(false)
@@ -30,8 +32,9 @@ const UserInfo = (props) => {
     const [dialCode, setDialCode] = useState('92')
     const [mark, setMark] = useState(true);
     const [disease, setDisease] = useState(true);
+    const [doc, setDoc] = useState('');
     const onUpdate = async () => {
-        if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim() != "") {
+        if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim() != "" && doc.trim()!="") {
             setActive(true)
             const id = await AsyncStorage.getItem('id');
             await saveData("Users", id, {
@@ -42,7 +45,7 @@ const UserInfo = (props) => {
                 BloodDonar: mark,
                 Location: location,
                 LastDonated: bloodDur,
-                disease:disease,
+                disease: disease,
             })
             setActive(false)
             props.navigation.replace("TabNavigator")
@@ -50,7 +53,41 @@ const UserInfo = (props) => {
         else
             toastPrompt("Enter required data!!!")
     }
+    const pickDoc = async () => {
+        try {
+            const results = await DocumentPicker.pick({
+                type: [DocumentPicker.types.allFiles],
+                //There can me more options as well find above
+            });
+            for (const res of results) {
+                //Printing the log realted to the file
+                console.log('res : ' + JSON.stringify(res));
+                console.log('URI : ' + res.uri);
+                console.log('Type : ' + res.type);
+                console.log('File Name : ' + res.name);
+                console.log('File Size : ' + res.size);
+                setDoc('' + res.name);
+            }
+            //Setting the state to show multiple file attributes
+            // this.setState({ multipleFile: results });
+        } catch (err) {
+            //Handling any exception (If any)
+            if (DocumentPicker.isCancel(err)) {
+                //If user canceled the document selection
+                //   alert('Canceled from multiple doc picker');
+            } else {
+                //For Unknown Error
+                alert('Unknown Error: ' + JSON.stringify(err));
+                throw err;
+            }
+        }
+        // let reference = storage().ref('ISSB Complete book (1).pdf');         // 2
+        // let task = reference.putFile('content://com.android.providers.media.documents/document/document%3A11534');               // 3
 
+        // task.then(() => {                                 // 4
+        //     console.log('Image uploaded to the bucket!');
+        // }).catch((e) => console.log('uploading image error => ', e));
+    }
     const toastPrompt = (msg) => {
         if (Platform.OS === 'android') {
             ToastAndroid.show(msg, ToastAndroid.SHORT)
@@ -115,15 +152,25 @@ const UserInfo = (props) => {
                             <SVGS.downArrow style={{ position: 'absolute', right: WP(5) }} />
                         </Pressable>
                     </View>
-                    <Text style={{ ...Styles.firstTxt,marginTop:HP(2)}}>Do you have any disease?</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-evenly" }}>
-                        <TouchableOpacity onPress={()=>{setDisease(true)}} style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={{ ...Styles.firstTxt, marginTop: HP(2) }}>Do you have any disease?</Text>
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly" }}>
+                        <TouchableOpacity onPress={() => { setDisease(true) }} style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={{ ...Styles.firstTxt }}>Yes</Text>
-                            <RadioButton status={disease?'checked':"unchecked"} onPress={()=>{setDisease(true)}} />
+                            <RadioButton status={disease ? 'checked' : "unchecked"} onPress={() => { setDisease(true) }} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{setDisease(false)}} style={{ flexDirection: "row", alignItems: "center" }}>
+                        <TouchableOpacity onPress={() => { setDisease(false) }} style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={{ ...Styles.firstTxt }}>No</Text>
-                            <RadioButton status={disease?'unchecked':"checked"} onPress={()=>{setDisease(false)}} />
+                            <RadioButton status={disease ? 'unchecked' : "checked"} onPress={() => { setDisease(false) }} />
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity onPress={() => pickDoc()} style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', }}>
+                            {doc ?
+                                <Text style={{ ...Styles.firstTxt }}>{doc}</Text>
+                                :
+                                <Text style={{ ...Styles.firstTxt }}>Upload Health Certificate</Text>
+                            }
+                            <UploadIcon name='file-upload' color={'black'} size={25} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => setMark(!mark)} style={{ ...Styles.row, marginTop: HP(2) }}>

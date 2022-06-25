@@ -2,7 +2,8 @@ const initialState = {
     backgroundColor: 'red',
     Imgs: [],
     user: {},
-    ln: 'gm'
+    ln: 'gm',
+    volunteer: [],
 };
 
 export const reducer = (state = initialState, action: any) => {
@@ -24,6 +25,11 @@ export const reducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 user: action.payload
+            }
+        case 'vol':
+            return {
+                ...state,
+                volunteer: action.payload
             }
 
         case 'ln':

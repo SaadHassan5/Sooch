@@ -34,32 +34,41 @@ export const SVGS = {
     navArrow,
     send,
     plus,
-    threeDot, 
-    share, 
-    heart,//home
-    location, 
+    threeDot,
+    share,
+    heart, //home
+    location,
     notification, //setting
-    setting, 
+    setting,
     logout, // profile
     // pagingDot,// onBoarding
 }
 
 const splashBack = require('./splashback.png')
 const student = require('./student.jpg')
-// const homeLogo = require('./homeLogo.png')
+    // const homeLogo = require('./homeLogo.png')
 const soch = require('./soch.png')
 const bloodDonate = require('./bloodDonate.jpg')
 const moneyDonate = require('./moneyDonate.jpg')
 const counselling = require('./counselling.jpg')
 const medical = require('./medical.jpg')
 const volunteer = require('./volunteer.jpg')
+const JazzLogo = require('./JazzLogo.png')
+const Easypaisa = require('./easypaisa.png')
+const Paypal = require('./Paypal.png')
+const Shine = require('./shine.png')
 
 export const IMAGES = {
     splashBack,
     medical,
     soch,
-    bloodDonate, moneyDonate,
+    bloodDonate,
+    moneyDonate,
     counselling,
     student,
-    volunteer
+    volunteer,
+    JazzLogo,
+    Easypaisa,
+    Paypal,
+    Shine
 }

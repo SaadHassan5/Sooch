@@ -53,7 +53,7 @@ class Login extends React.Component {
           <View style={{ ...Styles.whiteView, paddingTop: HP(1.5), paddingHorizontal: WP(6) }}>
             <Text style={{ ...Styles.logTxt }}>Log In</Text>
             <View style={{ justifyContent: 'center', width: '100%', marginTop: HP(3), }}>
-              <Input onChange={(e) => { this.setState({ email: e }) }} placeTxt={"Username"} />
+              <Input keyboardType='email-address' onChange={(e) => { this.setState({ email: e }) }} placeTxt={"Username"} />
               <SVGS.userIcon style={{ position: 'absolute', right: WP(5) }} />
             </View>
             <View style={{ justifyContent: 'center', width: '100%', marginTop: HP(3), }}>

@@ -49,10 +49,15 @@ const Money = (props) => {
                                     </View>
                                     <View style={{}}>
                                         {item.AccountName &&
-                                        <Text style={{ ...Styles.nameTxt }}>Account Name: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.AccountName}</Text></Text>
+                                            <Text style={{ ...Styles.nameTxt }}>Account Name: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.AccountName}</Text></Text>
                                         }
-                                        {item.Account&&
-                                            <Text style={{ ...Styles.nameTxt }}>Account No: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.Account}</Text></Text>
+                                        {item.Account &&
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                <Text style={{ ...Styles.nameTxt }}>Account No: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.Account}</Text></Text>
+                                                <TouchableOpacity onPress={()=>{props.navigation.navigate('Donation')}}>
+                                                    <Text style={{ ...Styles.nameTxt, textDecorationLine: "underline", color: 'green' }}>Send Donations</Text>
+                                                </TouchableOpacity>
+                                            </View>
                                         }
                                     </View>
                                     <View style={{ ...Styles.row, }}>

@@ -32,7 +32,7 @@ const See = (props) => {
 
         let temp = [];
         const res = await getAllOfCollection("Users");
-        // console.log('res don', res);
+        console.log('res don', res);
         await res?.filter(e => {
             if (e?.BloodDonar)
                 temp.push(e)
@@ -63,6 +63,11 @@ const See = (props) => {
                         <View style={{ ...Styles.cardView, ...Styles.shadow, marginTop: HP(3) }}>
                             <Text style={{ ...Styles.nameTxt }}>Donor Name: {item?.Name}</Text>
                             <Text style={{ ...Styles.nameTxt, marginTop: WP(2) }}>Blood Group: {item?.BloodGroup}</Text>
+                            {item?.disease?
+                                <Text style={{ ...Styles.nameTxt, marginTop: WP(2),color:'green'}}>Disease Record: Has a Disease</Text>
+                                :
+                                <Text style={{ ...Styles.nameTxt, marginTop: WP(2) }}>Disease Record: No Disease</Text>
+                            }
                             <View style={{ marginTop: WP(2) }}>
                                 {item?.LastDonated?.toLowerCase() == "less than 3 months ago" ?
                                     <Text style={{ ...Styles.nameTxt, color: 'red' }}>Last time Donated Blood: {item?.LastDonated?.toUpperCase()}</Text>

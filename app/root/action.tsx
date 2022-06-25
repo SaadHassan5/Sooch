@@ -16,6 +16,12 @@ export const GetUser = (user: any) => {
         payload: user
     };
 };
+export const GetVolun = (volunteer: any) => {
+    return {
+        type: 'vol',
+        payload: volunteer
+    };
+};
 export const GetLn = (ln: any) => {
     return {
         type: 'ln',

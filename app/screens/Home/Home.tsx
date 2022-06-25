@@ -9,17 +9,21 @@ import Icon from 'react-native-vector-icons/Feather'
 import { ChatComp } from '../../assets/components/SvgComponent/chatComp';
 import { connect } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChangeBackgroundColor, GetUser } from '../../root/action';
+import { ChangeBackgroundColor, GetUser, GetVolun } from '../../root/action';
 import { FireAuth } from '../../Auth/socialAuth';
-import { getData } from '../../Auth/fire';
+import { getAllOfCollection, getData } from '../../Auth/fire';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CongoModal } from '../../assets/components/Modal/congoModal';
 
 class Home extends React.Component<any> {
     state = {
         mode: 'feed',
+        mod: false,
+        volWeek: {}
     }
     componentDidMount() {
         this.callUser();
+        this.getVolunteers();
     }
     async callUser() {
 
@@ -34,9 +38,37 @@ class Home extends React.Component<any> {
         // this.props.getUser(res?.data?.data?.user);
 
     }
+    async getVolunteers() {
+        console.log("Date",new Date().toDateString());
+        
+        let dayWk= new Date().toDateString().split(' ');
+        if(true){
+        let temp = [];
+        const res: any = await getAllOfCollection("Volunteer");
+        console.log('res homee', res);
+        this.props.getVolun(res);
+        let max = res[0]
+        await res?.filter(function (item) {
+            if (item?.points > max?.points) {
+                max = item;
+            }
+        })
+        const value = await AsyncStorage.getItem('VolunteerModal')
+            if (value != "Exist") {
+                console.log("Exist");
+                this.setState({ mod: true })
+            }
+            else
+            console.log("Not Exist");
+        this.setState({ volWeek: max })
+    }
+    }
     render() {
         return (
             <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1), }}>
+                {this.state.mod &&
+                    <CongoModal mod={true} name={this.state.volWeek?.name} />
+                }
                 <ScrollView contentContainerStyle={{ paddingBottom: WP(40), marginTop: HP(1) }}>
                     <HomeHeader />
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Volunteer')} style={{ ...Styles.cardView, ...Styles.shadow }}>
@@ -89,10 +121,12 @@ class Home extends React.Component<any> {
 const mapStateToProps = (state: any) => {
     const { backgroundColor } = state;
     const { user } = state;
+    const { volunteer } = state;
     // alert(backgroundColor);
     // alert(Imgs);
     // console.log(backgroundColor);
     console.log('Redux User=>', user);
+    console.log('Redux Volun=>', volunteer);
 
     return state;
 };
@@ -100,6 +134,7 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         changeBackgroundColor: (bg: any) => dispatch(ChangeBackgroundColor(bg)),
         getUser: (userInfo: any) => dispatch(GetUser(userInfo)),
+        getVolun: (voluntir: any) => dispatch(GetVolun(voluntir)),
     }
 }
 // export default Home

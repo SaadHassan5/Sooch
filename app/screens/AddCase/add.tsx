@@ -17,10 +17,15 @@ import { showLocation } from 'react-native-map-link'
 import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler'
 import Icon from "react-native-vector-icons/MaterialIcons"
+import { VoltModal } from '../../assets/components/Modal/VolModal';
+import { connect } from 'react-redux';
+import { ChangeBackgroundColor, GetUser, GetVolun } from '../../root/action';
 const Add = (props) => {
     const [need, setNeed] = useState("Blood")
     const [location, setLocation] = useState(false)
     const [loc, setLoc] = useState("")
+    const [volt, setVolt] = useState({})
+    const [volMod, setVolMod] = useState(false)
     const [locMod, setlocMod] = useState(false)
     const [donMod, setDonMod] = useState(false)
     const [needMod, setNeedMod] = useState(false)
@@ -81,14 +86,18 @@ const Add = (props) => {
                             Account: account,
                         }
                     }
-                    else if (need=="Education"){
-                        obj={
+                    else if (need == "Education") {
+                        obj = {
                             ...obj,
-                            Institue:institue,
+                            Institue: institue,
                         }
                     }
                     console.log(obj);
-
+                    if(volt!=""){
+                        await saveData("Volunteer", volt?.email, {
+                            points:parseInt(volt?.points) + 1,
+                        })
+                    }
                     setActive(true)
                     const id = await AsyncStorage.getItem('id');
                     await saveData("Cases", "", obj);
@@ -153,8 +162,8 @@ const Add = (props) => {
 
     }
     useEffect(() => {
-
     }, [])
+
     return (
         <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1) }}>
             <ScrollView contentContainerStyle={{ paddingBottom: HP(20) }}>
@@ -226,7 +235,11 @@ const Add = (props) => {
                     <View style={{ marginTop: HP(2) }}>
                         <TextInput numberOfLines={7} textAlignVertical={"top"} multiline={true} placeholderTextColor={"#B7C1DF"} onChangeText={(e) => setDesc(e)} style={{ ...Styles.inp, color: 'black' }} placeholder={'Description'} />
                     </View>
-
+                    <Text style={{ ...Styles.nameTxt, marginTop: HP(3) }}>Volunteer Reference</Text>
+                    <TouchableOpacity onPress={() => setVolMod(true)} style={{ marginTop: HP(2), justifyContent: 'center' }}>
+                        <Input editable value={volt?.name} placeTxt={"Select Volunteer"} />
+                        <SVGS.downArrow style={{ position: 'absolute', right: WP(10), }} />
+                    </TouchableOpacity>
                     <View style={{ marginTop: HP(5) }}>
                         <CustomBtn1 onPress={() => onPost()} txt={"Post"} />
                     </View>
@@ -240,7 +253,28 @@ const Add = (props) => {
             <NeedModal mod={needMod} onPress={() => setNeedMod(false)} need={need} onPressBlood={() => setNeed('Blood')} onPressMoney={() => setNeed('Money')} onPressEdu={() => setNeed('Education')} onPressOther={() => setNeed('Other')} />
             <CityModal mod={locMod} setLocation={setLoc} Location={loc} onPress={() => setlocMod(false)} setMod={setlocMod} />
             <DonorList mod={donMod} donors={donors} exist={exist} onPress={() => setDonMod(false)} />
+            <VoltModal mod={volMod} onPress={()=>setVolMod(false)} setMod={setVolMod} setVolt={setVolt} voltA={props.volunteer}/>
         </SafeAreaView>
     )
 }
-export default Add;
+const mapStateToProps = (state: any) => {
+    const { backgroundColor } = state;
+    const { user } = state;
+    const { volunteer } = state;
+    // alert(backgroundColor);
+    // alert(Imgs);
+    // console.log(backgroundColor);
+    console.log('Redux User=>', user);
+    console.log('Redux Volun=>', volunteer);
+
+    return state;
+};
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        changeBackgroundColor: (bg: any) => dispatch(ChangeBackgroundColor(bg)),
+        getUser: (userInfo: any) => dispatch(GetUser(userInfo)),
+        getVolun: (voluntir: any) => dispatch(GetVolun(voluntir)),
+    }
+}
+// export default Home
+export default connect(mapStateToProps, mapDispatchToProps)(Add);

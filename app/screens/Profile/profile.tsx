@@ -23,6 +23,8 @@ const Profile = (props) => {
             if (res) {
                 AsyncStorage.removeItem("User");
                 AsyncStorage.removeItem("id");
+                AsyncStorage.removeItem("Date");
+                AsyncStorage.removeItem("VolunteerModal");
                 props.navigation.replace("Splash")
             }
         })

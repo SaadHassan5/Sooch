@@ -9,9 +9,9 @@ import Icon from 'react-native-vector-icons/Feather'
 import { ChatComp } from '../../assets/components/SvgComponent/chatComp';
 import { connect } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChangeBackgroundColor, GetUser } from '../../root/action';
+import { ChangeBackgroundColor, GetUser, GetVolun } from '../../root/action';
 import { FireAuth } from '../../Auth/socialAuth';
-import { getData, saveData } from '../../Auth/fire';
+import { getAllOfCollection, getData, saveData } from '../../Auth/fire';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
@@ -36,10 +36,11 @@ const Volunteer = (props) => {
                             phone: phone,
                             gender: gender,
                             email: email,
+                            points:"0",
                         }
                         await saveData("Volunteer", email, obj);
-                        AlertService.show("Congratulation","Welcome to our team!!")
-                        props.navigation.goBack()
+                        AlertService.show("Congratulation","Welcome to our team!!");
+                        getVolunteers();
                     }
                 })
             }
@@ -49,6 +50,13 @@ const Volunteer = (props) => {
         }
         else
             AlertService.show("Not Proceeded", "Required all fields!!")
+    }
+    const getVolunteers=async()=> {
+        let temp = [];
+        const res: any = await getAllOfCollection("Volunteer");
+        console.log('res homee', res);
+        props.getVolun(res);
+        props.navigation.goBack()
     }
     return (
         <SafeAreaView style={{ ...Styles.container }}>
@@ -83,10 +91,12 @@ const Volunteer = (props) => {
 const mapStateToProps = (state: any) => {
     const { backgroundColor } = state;
     const { user } = state;
+    const { volunteer } = state;
     // alert(backgroundColor);
     // alert(Imgs);
     // console.log(backgroundColor);
     console.log('Redux User=>', user);
+    console.log('Redux Volun=>', volunteer);
 
     return state;
 };
@@ -94,6 +104,8 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         changeBackgroundColor: (bg: any) => dispatch(ChangeBackgroundColor(bg)),
         getUser: (userInfo: any) => dispatch(GetUser(userInfo)),
+        getVolun: (voluntir: any) => dispatch(GetVolun(voluntir)),
     }
 }
+// export default Home
 export default connect(mapStateToProps, mapDispatchToProps)(Volunteer);
