@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { FlatList, Platform, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View, Switch, ScrollView, SafeAreaView, ActivityIndicator, ToastAndroid } from 'react-native';
 import { CustomBtn1 } from '../../assets/components/CustomButton/CustomBtn1';
@@ -16,13 +16,15 @@ import { LastModal } from '../../assets/components/Modal/LastModal';
 import DocumentPicker from "react-native-document-picker";
 import storage from '@react-native-firebase/storage';
 import UploadIcon from "react-native-vector-icons/MaterialIcons"
+import { CommonActions } from '@react-navigation/native';
+
 const UserInfo = (props) => {
     const [location, setLocation] = useState("")
     const [locMod, setlocMod] = useState(false)
     const [lastMod, setLastMod] = useState(false)
     const [flag, setFlag] = useState('🇵🇰')
     const [gender, setGender] = useState('Male')
-    const [phone, setPhone] = useState('')
+    const [phone, setPhone] = useState((props.route.params?.number.split('92'))[1]||'')
     const [first, setFirst] = useState('')
     const [last, setLast] = useState('')
     const [blood, setBlood] = useState('')
@@ -48,7 +50,14 @@ const UserInfo = (props) => {
                 disease: disease,
             })
             setActive(false)
-            props.navigation.replace("TabNavigator")
+             props.navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                { name: 'TabNavigator' },
+              ]
+            })
+          );
         }
         else
             toastPrompt("Enter required data!!!")
@@ -95,6 +104,10 @@ const UserInfo = (props) => {
             // alert(msg);
         }
     }
+    useEffect(()=>{
+        console.log(props.route.params);
+        
+    },[])
     return (
         <SafeAreaView style={{ ...Styles.container }}>
             <ScrollView>
@@ -122,7 +135,7 @@ const UserInfo = (props) => {
                                 <TextInput editable={false} value={dialCode} placeholderTextColor={'red'} style={{ ...Styles.inp, width: '100%', borderTopLeftRadius: WP(4), borderBottomLeftRadius: WP(4), paddingLeft: WP(9), height: 50 }} />
                                 <Text style={{ position: 'absolute', left: WP(3) }}>{flag}</Text>
                             </TouchableOpacity>
-                            <TextInput onChangeText={(e) => setPhone(e)} keyboardType={'number-pad'} placeholder={'Phone Number'} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp, width: '70%', borderTopRightRadius: WP(4), borderBottomRightRadius: WP(4), height: 50 }} />
+                            <TextInput onChangeText={(e) => setPhone(e)} value={phone} keyboardType={'number-pad'} placeholder={'Phone Number'} placeholderTextColor={'#B7C1DF'} style={{ ...Styles.inp, width: '70%', borderTopRightRadius: WP(4), borderBottomRightRadius: WP(4), height: 50 }} />
                         </View>
                     </View>
                     <View style={{ width: '100%', marginTop: HP(3), }}>

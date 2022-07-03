@@ -16,6 +16,8 @@ import Medical from '../screens/Medical/medical';
 import StudentHelp from '../screens/StudentHelp/StudentHelp';
 import Volunteer from '../screens/Volunteer/volunteer';
 import Donation from '../screens/Donations/Donation';
+import LoginPhn from '../screens/LoginPhone/LoginPhn';
+import OptConfirmation from '../screens/OtpConfirmation/OtpConfirmation';
 
 const MyStack = createStackNavigator();
 class Stack extends Component {
@@ -24,6 +26,8 @@ class Stack extends Component {
         <MyStack.Navigator initialRouteName={'Splash'} screenOptions={{headerShown:false}}>
           <MyStack.Screen name="Splash" component={Splash} />
           <MyStack.Screen name="Login" component={Login} />
+          <MyStack.Screen name="LoginPhone" component={LoginPhn} />
+          <MyStack.Screen name="OtpConfirmation" component={OptConfirmation} />
           <MyStack.Screen name="Signup" component={Signup} />
           <MyStack.Screen name="PasswordReset" component={PasswordReset} />
           <MyStack.Screen name="UserInfo" component={UserInfo} />

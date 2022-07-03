@@ -76,10 +76,23 @@ const Reset = async (email, props) => {
       console.error(error);
       // alert(error)
     });
+}
+async function signInWithPhoneNumber(phoneNumber) {
+  // const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+  // setConfirm(confirmation);
+}
 
+async function confirmCode(confirm) {
+  // try {
+  //   await confirm.confirm(code);
+  // } catch (error) {
+  //   console.log('Invalid code.');
+  // }
 }
 export const FireAuth = {
   Signup,
   Signin,
-  Reset
+  Reset,
+  signInWithPhoneNumber,
+  confirmCode
 }

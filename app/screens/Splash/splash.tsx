@@ -4,6 +4,7 @@ import { HP } from '../../assets/config';
 import fontFamily from '../../assets/config/fontFamily';
 import { IMAGES, SVGS } from '../../assets/imgs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommonActions } from '@react-navigation/native';
 
 export class Splash extends React.Component {
     state = {

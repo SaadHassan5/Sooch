@@ -2,39 +2,45 @@ import React from 'react'
 import { ActivityIndicator, ImageBackground, Platform, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { CustomHead1 } from '../../assets/components/CustomHeader/CustomHead1';
 import { Input } from '../../assets/components/Input/Input';
-import { HP, WP } from '../../assets/config';
+import { HP, palette, WP } from '../../assets/config';
 import { IMAGES, SVGS } from '../../assets/imgs';
-import { LoginStyles as Styles } from './login-style';
+import { LoginPhnStyles as Styles } from './loginPhn-style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CustomBtn1 } from '../../assets/components/CustomButton/CustomBtn1';
 import { LoginIcons } from '../../assets/components/LoginIcons/LoginIcons';
 import { FireAuth } from '../../Auth/socialAuth';
-class Login extends React.Component {
+import auth from '@react-native-firebase/auth';
+import fontFamily from '../../assets/config/fontFamily';
+import { OtpInput } from '../../assets/components/Otp_Input/Otp_Input';
+class LoginPhn extends React.Component {
   state = {
     eye: true,
     email: '',
     password: '',
     signed: true,
     active: false,
+    confirm: null,
+    code: "123",
+    userCode:"",
   }
   componentDidMount() {
 
   }
-
   async checkLogin() {
-    if (this.state.email.trim() != '' && this.state.password.trim() != '') {
-      let reg = /[a-zA-Z0-9]{0,}([.]?[a-zA-Z0-9]{1,})[@](gmail.com|hotmail.com|yahoo.com|outlook.com)/;
-      if (reg.test(this.state.email)) {
-        this.setState({ active: true })
-        await FireAuth.Signin(this.state.email, this.state.password, this.props);
-        this.setState({ active: false })
+    if (this.state.email.trim() != '') {
+      let reg = /^923\d{9}$/;
+      // let reg =/^03\d{9}$/;
+      console.log(this.state.email.length);
+      if (reg.test(this.state.email.trim())) {
+        this.props.navigation.navigate("OtpConfirmation",{number:"+"+this.state.email})
+        this.toastPrompt('Sending Code')
       }
       else {
-        this.toastPrompt('Enter Valid Email')
+        this.toastPrompt('Invalid Phone Number')
       }
     }
     else {
-      this.toastPrompt('Enter Email / Password')
+      this.toastPrompt('Enter Phone Number')
     }
   }
   toastPrompt(msg) {
@@ -53,36 +59,24 @@ class Login extends React.Component {
           <View style={{ ...Styles.whiteView, paddingTop: HP(1.5), paddingHorizontal: WP(6) }}>
             <Text style={{ ...Styles.logTxt }}>Log In</Text>
             <View style={{ justifyContent: 'center', width: '100%', marginTop: HP(3), }}>
-              <Input keyboardType='email-address' onChange={(e) => { this.setState({ email: e }) }} placeTxt={"Username"} />
+              <Input keyboardType='phone-pad' onChange={(e) => { this.setState({ email: e }) }} placeTxt={"Phone number"} />
               <SVGS.userIcon style={{ position: 'absolute', right: WP(5) }} />
             </View>
-            <View style={{ justifyContent: 'center', width: '100%', marginTop: HP(3), }}>
-              <Input onChange={(e) => { this.setState({ password: e }) }} eye={this.state.eye} password placeTxt={"Password"} />
-              <TouchableOpacity onPress={() => { this.setState({ eye: !this.state.eye }) }} style={{ position: 'absolute', right: WP(5) }} >
-                {this.state.eye ?
-                  <Icon name='eye' size={25} color={'#B7C1DF'} />
-                  :
-                  <Icon name='eye-off' size={25} color={'#B7C1DF'} />
-                }
-              </TouchableOpacity>
-            </View>
+            <Text style={{ ...Styles.forgotTxt, textAlign: 'right', color: palette.lightGrey }}>Format ( 923********* )</Text>
+            {/* {this.state.code.length>0 &&
+              <View>
+                <OtpInput value={this.state.userCode}/>
+              </View>
+            } */}
             <View style={{ paddingTop: HP(3) }}>
               <CustomBtn1 txt={'Sign In'} onPress={() => this.checkLogin()} />
               {/* this.props.navigation.navigate('Signup') */}
             </View>
-            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('LoginPhone')}>
-                <Text style={{ ...Styles.forgotTxt }}>Login with Phone</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('PasswordReset')}>
-                <Text style={{ ...Styles.forgotTxt }}>Forgot Password</Text>
-              </TouchableOpacity>
-            </View>
             {/* <Text style={{ ...Styles.orTxt }}>or login with</Text> */}
             {/* <LoginIcons  /> */}
-            <TouchableOpacity style={{ marginTop: HP(4), paddingVertical: HP(2) }} onPress={() => this.props.navigation.navigate('Signup')}>
+            {/* <TouchableOpacity style={{ marginTop: HP(4), paddingVertical: HP(2) }} onPress={() => this.props.navigation.navigate('Signup')}>
               <Text style={{ ...Styles.dontTxt }}>Don’t have an account? <Text style={{ color: '#0118B5' }}>Sign Up</Text></Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
         </ImageBackground>
@@ -95,4 +89,4 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+export default LoginPhn;

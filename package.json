@@ -25,6 +25,7 @@
     "react-native": "0.66.3",
     "react-native-actions-sheet": "^0.5.4",
     "react-native-android-location-enabler": "^1.2.2",
+    "react-native-confirmation-code-field": "^7.3.0",
     "react-native-document-picker": "^8.1.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
