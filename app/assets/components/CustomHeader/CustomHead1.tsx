@@ -15,9 +15,9 @@ export class CustomHead1 extends React.Component {
           </TouchableOpacity>
         }
         <Text style={{ textAlign: 'center', color: palette.black, fontSize: 17, paddingTop: HP(1), fontFamily: fontFamily.bold }}>{this.props.txt}</Text>
-        {this.props.save &&
-          <TouchableOpacity style={{ position: 'absolute', padding: WP(3), right: WP(4) }}>
-            <Text style={{ color: '#0118B5', fontFamily: fontFamily.bold }}>Save</Text>
+        {this.props.onSkip &&
+          <TouchableOpacity onPress={this.props.onSkip} style={{ position: 'absolute', padding: WP(3), right: WP(4) }}>
+            <Text style={{ color: '#0118B5', fontFamily: fontFamily.bold }}>Skip</Text>
           </TouchableOpacity>
         }
         {this.props.txt2 &&

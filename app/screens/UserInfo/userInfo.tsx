@@ -34,7 +34,7 @@ const UserInfo = (props) => {
     const [disease, setDisease] = useState(true);
     const [doc, setDoc] = useState('');
     const onUpdate = async () => {
-        if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim() != "" && doc.trim()!="") {
+        if (gender != '' && first.trim() != "" && last.trim() != "" && phone.trim() != "" && location.trim() != "" ) {
             setActive(true)
             const id = await AsyncStorage.getItem('id');
             await saveData("Users", id, {
@@ -98,7 +98,8 @@ const UserInfo = (props) => {
     return (
         <SafeAreaView style={{ ...Styles.container }}>
             <ScrollView>
-                <CustomHead1 onSave={() => props.navigation.goBack()} txt={'User Data'} onPressArrow={() => props.navigation.goBack()} />
+            {/* onSkip={() => props.navigation.replace("TabNavigator")} */}
+                <CustomHead1  txt={'User Data'}  />
                 <View style={{ paddingHorizontal: WP(7) }}>
                     <View style={{ width: '100%', marginTop: HP(3), }}>
                         <Text style={{ ...Styles.firstTxt }}>First Name<Text style={{ color: 'red' }}>*</Text></Text>

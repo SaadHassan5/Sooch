@@ -1282,10 +1282,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.2.1.tgz#a993a838689aab7f7d339da9c033d6c6a6ad312a"
   integrity sha512-7yzKShT6uFbzXNevN57xWFSYA6nNTvmfDlf+K8cEWjTVTP9deqMT635iNt48um0jTTmT6Dc7mDtdVcb+kla/WA==
 
-"@react-native-firebase/storage@^14.1.0":
-  version "14.2.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-14.2.1.tgz#d9259adf20d66e8803e2a157fd1185fc25a24569"
-  integrity sha512-MVgBdOjfhGGcfU5OkqZ1rhFQ/xspoukbFL+zFl5GyDlMeQk59H/IaNHglboQVk1D0nrJ9IF/yLukbUIKy1uZnw==
+"@react-native-firebase/storage@^14.9.3":
+  version "14.11.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-14.11.1.tgz#754a62e91f5ea6f305f96635a0db7c3d6aaee62d"
+  integrity sha512-978/kBsZ1Jby3izelH+CdTzAVRg8bvYtiJgG3Vnc2LNWq1n+66ofuJrlbnjMWlnWJyr6RE38KikNZ6c2uGVg6A==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -6227,6 +6227,13 @@ react-native-codegen@^0.0.7:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-document-picker@^8.1.0:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-8.1.1.tgz#642bbe25752cc428b96416318f8dc07cef29ee10"
+  integrity sha512-mH0oghd7ndgU9/1meVJdqts1sAkOfUQW1qbrqTTsvR5f2K9r0BAj/X02dve5IBMOMZvlGd7qWrNVuIFg5AUXWg==
+  dependencies:
+    invariant "^2.2.4"
 
 react-native-elements@^3.4.2:
   version "3.4.2"
