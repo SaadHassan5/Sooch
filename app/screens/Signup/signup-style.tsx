@@ -34,4 +34,11 @@ export const SignupStyles = StyleSheet.create({
         paddingTop:HP(3),
         color:"#979797",
     },
+    
+    forgotTxt:{
+        color:'#0118B5',
+        fontSize:14,
+        fontFamily:fontFamily.bold,
+        paddingTop:HP(1),
+    },
 })

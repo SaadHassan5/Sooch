@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Image, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, TouchableHighlightBase, TouchableOpacity, View } from 'react-native';
 import { HomeHeader } from '../../assets/components/CustomHeader/HomeHeader';
-import { HP, WP } from '../../assets/config';
+import { HP, palette, WP } from '../../assets/config';
 import fontFamily from '../../assets/config/fontFamily';
 import { IMAGES, SVGS } from '../../assets/imgs';
 import { VolunteerStyles as Styles } from './volunteer-style';
@@ -21,11 +21,12 @@ import { CustomBtn1 } from '../../assets/components/CustomButton/CustomBtn1';
 import AlertService from '../../Services/alertService';
 const Volunteer = (props) => {
     const [name, setName] = useState(props?.user?.Name)
+    const [desig, setDesig] = useState('')
     const [phone, setPhone] = useState(props?.user?.Phone)
     const [gender, setGender] = useState(props?.user?.gender)
     const [email, setEmail] = useState("")
     const onPost = async () => {
-        if (name != '' && phone != '' && gender != '' && email != '') {
+        if (name != '' && phone != '' && gender != '' && email != ''  && desig!='') {
             let reg = /[a-zA-Z0-9]{0,}([.]?[a-zA-Z0-9]{1,})[@](gmail.com|hotmail.com|yahoo.com|outlook.com)/;
             if (reg.test(email)) {
                 AlertService.confirm("Are you sure you want to be a volunteer?").then(async (res) => {
@@ -78,6 +79,11 @@ const Volunteer = (props) => {
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Gender<Text style={{ color: 'red' }}>*</Text></Text>
                     <View style={{ marginTop: HP(1) }}>
                         <Input value={gender} editable />
+                    </View>
+                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Desigination<Text style={{ color: 'red' }}>*</Text></Text>
+                    <View style={{ marginTop: HP(1) }}>
+                        <Input placeTxt={'Enter your desired desigination'} value={desig} onChange={(e)=>{setDesig(e)}} />
+                        <Text style={{ ...Styles.nameTxt, color:palette.gray,fontSize:13,textAlign:'right'}}>Teams (Food / Blood / Survey)<Text style={{ color: 'red' }}>*</Text></Text>
                     </View>
                     <View style={{ marginTop: HP(5) }}>
                         <CustomBtn1 onPress={() => onPost()} txt={"Done"} />

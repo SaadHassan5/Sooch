@@ -3,10 +3,17 @@ import { ImageBackground, Platform, StyleSheet, Text, View } from 'react-native'
 import { HP, palette, WP } from '../../assets/config';
 import fontFamily from '../../assets/config/fontFamily';
 
-export const AddStyles = StyleSheet.create({
+export const 
+AddStyles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:"#ffff"
+    },
+    forgotTxt:{
+        color:'#0118B5',
+        fontSize:14,
+        fontFamily:fontFamily.bold,
+        paddingTop:HP(1),
     },
     nameTxt:{
         fontFamily:fontFamily.semi_bold,

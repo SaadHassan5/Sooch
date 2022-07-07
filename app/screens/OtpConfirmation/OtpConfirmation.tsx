@@ -76,7 +76,7 @@ const OptConfirmation=(props)=> {
         return (
             <View style={{ ...Styles.container }}>
                 <ImageBackground source={IMAGES.splashBack} style={{ width: '100%', height: '100%' }}>
-                    <CustomHead1 txt={'OTP Confirmation'} onPressArrow={() => this.props.navigation.goBack()} />
+                    <CustomHead1 txt={'OTP Confirmation'} onPressArrow={() => props.navigation.goBack()} />
                     <View style={{ ...Styles.whiteView, paddingTop: HP(1.5), paddingHorizontal: WP(6) }}>
                         <Text style={{ ...Styles.pasTxt }}>Enter OTP</Text>
                         <View>

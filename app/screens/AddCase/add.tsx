@@ -5,7 +5,7 @@ import { CustomBtn1 } from '../../assets/components/CustomButton/CustomBtn1';
 import { CustomHead1 } from '../../assets/components/CustomHeader/CustomHead1';
 import { Input } from '../../assets/components/Input/Input';
 import { NeedModal } from '../../assets/components/Modal/needModal';
-import { HP, WP } from '../../assets/config';
+import { HP, palette, WP } from '../../assets/config';
 import { SVGS } from '../../assets/imgs';
 import { AddStyles as Styles } from './add-style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -79,6 +79,10 @@ const Add = (props) => {
                         }
                     }
                     else if (need == "Money") {
+                        // if (parseInt(money) > 100000) {
+                        //     toastPrompt("Money Limit exceed!!")
+                        //     return;
+                        // }
                         obj = {
                             ...obj,
                             Money: money,
@@ -93,9 +97,9 @@ const Add = (props) => {
                         }
                     }
                     console.log(obj);
-                    if(volt!=""){
+                    if (volt != "") {
                         await saveData("Volunteer", volt?.email, {
-                            points:parseInt(volt?.points) + 1,
+                            points: parseInt(volt?.points) + 1,
                         })
                     }
                     setActive(true)
@@ -163,7 +167,15 @@ const Add = (props) => {
     }
     useEffect(() => {
     }, [])
-
+    const checkMoney = (mon) => {
+        if (parseInt(mon) > 100000) {
+            toastPrompt("Enter Money less than limit!!")
+        }
+        else {
+            // toastPrompt("imit!!")
+            setMoney(mon);
+        }
+    }
     return (
         <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1) }}>
             <ScrollView contentContainerStyle={{ paddingBottom: HP(20) }}>
@@ -208,7 +220,7 @@ const Add = (props) => {
                     {need == "Money" &&
                         <View>
                             <View style={{ marginTop: HP(2) }}>
-                                <Input keyboardType={"number-pad"} onChange={(e) => setMoney(e)} placeTxt={"Enter Amount"} />
+                                <Input value={money} keyboardType={"number-pad"} onChange={(e) => { setMoney(e) }} placeTxt={"Enter Amount"} />
                             </View>
                             <View style={{ marginTop: HP(2) }}>
                                 <Input onChange={(e) => setAccountName(e)} placeTxt={"Account Name"} />
@@ -253,7 +265,7 @@ const Add = (props) => {
             <NeedModal mod={needMod} onPress={() => setNeedMod(false)} need={need} onPressBlood={() => setNeed('Blood')} onPressMoney={() => setNeed('Money')} onPressEdu={() => setNeed('Education')} onPressOther={() => setNeed('Other')} />
             <CityModal mod={locMod} setLocation={setLoc} Location={loc} onPress={() => setlocMod(false)} setMod={setlocMod} />
             <DonorList mod={donMod} donors={donors} exist={exist} onPress={() => setDonMod(false)} />
-            <VoltModal mod={volMod} onPress={()=>setVolMod(false)} setMod={setVolMod} setVolt={setVolt} voltA={props.volunteer}/>
+            <VoltModal mod={volMod} onPress={() => setVolMod(false)} setMod={setVolMod} setVolt={setVolt} voltA={props.volunteer} />
         </SafeAreaView>
     )
 }

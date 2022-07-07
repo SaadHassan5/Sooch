@@ -14,6 +14,19 @@ export const MedicalStyles = StyleSheet.create({
         fontFamily: fontFamily.semi_bold,
         color:'black'
     },
+    forgotTxt:{
+        color:'#0118B5',
+        fontSize:14,
+        fontFamily:fontFamily.bold,
+        paddingTop:HP(1),
+    },
+    
+    firstTxt: {
+        fontSize: 14,
+        fontFamily: fontFamily.medium,
+        color: palette.black,
+        lineHeight: 17,
+    },
     nameTxt:{
         fontFamily:fontFamily.semi_bold,
         fontSize:14,
