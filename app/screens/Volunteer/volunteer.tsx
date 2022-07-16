@@ -26,7 +26,7 @@ const Volunteer = (props) => {
     const [gender, setGender] = useState(props?.user?.gender)
     const [email, setEmail] = useState("")
     const onPost = async () => {
-        if (name != '' && phone != '' && gender != '' && email != '' && desig.trim() != '') {
+        if (name != '' && phone != '' && email != '' && desig.trim() != '') {
             if (desig == 'Food' || desig == 'Blood' || desig == 'Survey') {
                 let reg = /[a-zA-Z0-9]{0,}([.]?[a-zA-Z0-9]{1,})[@](gmail.com|hotmail.com|yahoo.com|outlook.com)/;
                 if (reg.test(email)) {
@@ -36,7 +36,7 @@ const Volunteer = (props) => {
                             let obj = {
                                 name: name,
                                 phone: phone,
-                                gender: gender,
+                                // gender: gender,
                                 email: email,
                                 points: "0",
                                 designation:desig,
@@ -80,10 +80,6 @@ const Volunteer = (props) => {
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Phone Number<Text style={{ color: 'red' }}>*</Text></Text>
                     <View style={{ marginTop: HP(1) }}>
                         <Input onChange={(e) => setPhone(e)} placeTxt={"Enter Phone Number"} value={phone} />
-                    </View>
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Gender<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input value={gender} editable />
                     </View>
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Desigination<Text style={{ color: 'red' }}>*</Text></Text>
                     <View style={{ marginTop: HP(1) }}>
