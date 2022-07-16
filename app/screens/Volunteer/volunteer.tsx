@@ -26,33 +26,38 @@ const Volunteer = (props) => {
     const [gender, setGender] = useState(props?.user?.gender)
     const [email, setEmail] = useState("")
     const onPost = async () => {
-        if (name != '' && phone != '' && gender != '' && email != ''  && desig!='') {
-            let reg = /[a-zA-Z0-9]{0,}([.]?[a-zA-Z0-9]{1,})[@](gmail.com|hotmail.com|yahoo.com|outlook.com)/;
-            if (reg.test(email)) {
-                AlertService.confirm("Are you sure you want to be a volunteer?").then(async (res) => {
-                    if (res) {
+        if (name != '' && phone != '' && gender != '' && email != '' && desig.trim() != '') {
+            if (desig == 'Food' || desig == 'Blood' || desig == 'Survey') {
+                let reg = /[a-zA-Z0-9]{0,}([.]?[a-zA-Z0-9]{1,})[@](gmail.com|hotmail.com|yahoo.com|outlook.com)/;
+                if (reg.test(email)) {
+                    AlertService.confirm("Are you sure you want to be a volunteer?").then(async (res) => {
+                        if (res) {
 
-                        let obj = {
-                            name: name,
-                            phone: phone,
-                            gender: gender,
-                            email: email,
-                            points:"0",
+                            let obj = {
+                                name: name,
+                                phone: phone,
+                                gender: gender,
+                                email: email,
+                                points: "0",
+                                designation:desig,
+                            }
+                            await saveData("Volunteer", email, obj);
+                            AlertService.show("Congratulation", "Welcome to our team!!");
+                            getVolunteers();
                         }
-                        await saveData("Volunteer", email, obj);
-                        AlertService.show("Congratulation","Welcome to our team!!");
-                        getVolunteers();
-                    }
-                })
+                    })
+                }
+                else {
+                    AlertService.show('Enter Valid Email Please!')
+                }
             }
-            else {
-                AlertService.show('Enter Valid Email Please!')
-            }
+            else
+            AlertService.show('Enter Valid Desigination!')
         }
         else
             AlertService.show("Not Proceeded", "Required all fields!!")
     }
-    const getVolunteers=async()=> {
+    const getVolunteers = async () => {
         let temp = [];
         const res: any = await getAllOfCollection("Volunteer");
         console.log('res homee', res);
@@ -82,12 +87,15 @@ const Volunteer = (props) => {
                     </View>
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Desigination<Text style={{ color: 'red' }}>*</Text></Text>
                     <View style={{ marginTop: HP(1) }}>
-                        <Input placeTxt={'Enter your desired desigination'} value={desig} onChange={(e)=>{setDesig(e)}} />
-                        <Text style={{ ...Styles.nameTxt, color:palette.gray,fontSize:13,textAlign:'right'}}>Teams (Food / Blood / Survey)<Text style={{ color: 'red' }}>*</Text></Text>
+                        <Input autoCapitalization={"words"} placeTxt={'Enter your desired desigination'} value={desig} onChange={(e) => { setDesig(e) }} />
+                        <Text style={{ ...Styles.nameTxt, color: palette.gray, fontSize: 13, textAlign: 'right' }}>Teams (Food / Blood / Survey)<Text style={{ color: 'red' }}>*</Text></Text>
                     </View>
                     <View style={{ marginTop: HP(5) }}>
                         <CustomBtn1 onPress={() => onPost()} txt={"Done"} />
                     </View>
+                    <TouchableOpacity onPress={()=>{props.navigation.navigate("showVolunteers")}} style={{marginTop:HP(1),flexDirection:'row-reverse',alignSelf:'flex-end',paddingVertical:HP(1)}}>
+                    <Text style={{ ...Styles.nameTxt,fontSize:16 }}>View All Volunteers</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>

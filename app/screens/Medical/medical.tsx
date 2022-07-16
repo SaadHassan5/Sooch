@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View, ScrollView, Platform, Pressable, Linking, PermissionsAndroid } from 'react-native';
 import { HomeHeader } from '../../assets/components/CustomHeader/HomeHeader';
 import { HP, palette, WP } from '../../assets/config';
@@ -10,7 +10,7 @@ import { ChatComp } from '../../assets/components/SvgComponent/chatComp';
 import { connect } from 'react-redux';
 import { ChangeBackgroundColor, GetUser } from '../../root/action';
 import { FireAuth } from '../../Auth/socialAuth';
-import { getData } from '../../Auth/fire';
+import { getData, getDataCase } from '../../Auth/fire';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
@@ -26,55 +26,28 @@ const Medical = (props) => {
     const [add, setAdd] = useState("")
     const [money, setMoney] = useState("")
     const [doc, setDoc] = useState('');
-
-    const onPost = () => {
-
-    }
-    const pickDoc = async () => {
-        try {
-            const results = await DocumentPicker.pick({
-                type: [DocumentPicker.types.allFiles],
-                //There can me more options as well find above
-            });
-            for (const res of results) {
-                //Printing the log realted to the file
-                console.log('res : ' + JSON.stringify(res));
-                console.log('URI : ' + res.uri);
-                console.log('Type : ' + res.type);
-                console.log('File Name : ' + res.name);
-                console.log('File Size : ' + res.size);
-                setDoc('' + res.name);
+    const [data, setData] = useState([])
+    const [exist, setExist] = useState(false)
+    useEffect(() => {
+        getCase();
+    }, [])
+    const getCase = async () => {
+        let exi = false;
+        const id = await AsyncStorage.getItem("id");
+        console.log("id", id);
+        const res: any = await getDataCase("Cases")
+        console.log(res);
+       const ress= await res.filter(e => {
+            if (e.Need == "Medical"){
+                exi = true
+                return e;
             }
-            //Setting the state to show multiple file attributes
-            // this.setState({ multipleFile: results });
-        } catch (err) {
-            //Handling any exception (If any)
-            if (DocumentPicker.isCancel(err)) {
-                //If user canceled the document selection
-                //   alert('Canceled from multiple doc picker');
-            } else {
-                //For Unknown Error
-                alert('Unknown Error: ' + JSON.stringify(err));
-                throw err;
-            }
-        }
-        // let reference = storage().ref('ISSB Complete book (1).pdf');         // 2
-        // let task = reference.putFile('content://com.android.providers.media.documents/document/document%3A11534');               // 3
-
-        // task.then(() => {                                 // 4
-        //     console.log('Image uploaded to the bucket!');
-        // }).catch((e) => console.log('uploading image error => ', e));
+        })
+        console.log("Fil",ress);
+        
+        setExist(exi)
+        setData(ress);
     }
-    const checkMoney = (mon) => {
-        if (parseInt(mon) > 100000) {
-            toastPrompt("Enter Money less than limit!!")
-        }
-        else {
-            // toastPrompt("imit!!")
-            setMoney(mon);
-        }
-    }
-    
     const toastPrompt = (msg) => {
         if (Platform.OS === 'android') {
             ToastAndroid.show(msg, ToastAndroid.SHORT)
@@ -84,53 +57,35 @@ const Medical = (props) => {
     }
     return (
         <SafeAreaView style={{ ...Styles.container }}>
-            <ScrollView contentContainerStyle={{ paddingBottom: HP(10) }}>
-                <CustomHead1 txt={"Medical Help"} onPressArrow={() => props.navigation.goBack()} />
-                <View style={{ paddingHorizontal: WP(7), marginTop: HP(3) }}>
-                    <Text style={{ ...Styles.nameTxt, }}>Patient Name<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input onChange={(e) => setName(e)} placeTxt={"Enter Patient Name"} />
-                    </View>
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Hospital Address<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input onChange={(e) => setAdd(e)} placeTxt={"Enter Address"} />
-                    </View>
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Amount<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input value={money} keyboardType={"number-pad"} onChange={(e) => {checkMoney(e)}} placeTxt={"Enter Required Amount"} />
-                        <Text style={{ ...Styles.forgotTxt, textAlign: 'right', color: palette.lightGrey }}>Limit 100,000</Text>
-                    </View> 
-                    <Text style={{ ...Styles.nameTxt, }}>Patient Age<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input onChange={(e) => setName(e)} placeTxt={"Enter Patient Age"} />
-                    </View>
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Phone Number<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input onChange={(e) => setName(e)} placeTxt={"Enter Phone Number"} />
-                    </View>
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Disease Name</Text>
-                    <View style={{ marginTop: HP(1) }}>
-                        <Input onChange={(e) => setName(e)} placeTxt={"Enter Disease Name"} />
-                    </View>
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Medical Help Description<Text style={{ color: 'red' }}>*</Text></Text>
-                    <View style={{ marginTop: HP(2) }}>
-                        <TextInput multiline={true} placeholderTextColor={"#B7C1DF"} onChangeText={(e) => setDesc(e)} style={{ ...Styles.inp, height: HP(30), color: 'black' }} placeholder={'Description'} />
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={() => pickDoc()} style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', }}>
-                            {doc ?
-                                <Text style={{ ...Styles.firstTxt }}>{doc}</Text>
-                                :
-                                <Text style={{ ...Styles.firstTxt }}>Upload Health Certificate</Text>
-                            }
-                            <UploadIcon name='file-upload' color={'black'} size={25} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ marginTop: HP(5) }}>
-                        <CustomBtn1 onPress={() => onPost()} txt={"Post"} />
-                    </View>
-                </View>
-            </ScrollView>
+            {/* <ScrollView contentContainerStyle={{ paddingBottom: HP(10) }}> */}
+            <CustomHead1 txt={"Money Needs"} onPressArrow={() => { props.navigation.goBack() }} />
+            {!exist ?
+                <Text style={{ ...Styles.feedTxt, alignSelf: 'center', marginTop: HP(40) }}>No Record Found</Text>
+                :
+                <ScrollView contentContainerStyle={{ paddingBottom: HP(10) }}>
+                    {data?.map((item, i) =>
+                        <View key={i}>
+                                <View style={{ ...Styles.cardView, ...Styles.shadow, marginTop: HP(5),paddingVertical:HP(3) }}>
+                                    <View style={{ ...Styles.row, justifyContent: 'space-between' }}>
+                                        <Text style={{ ...Styles.feedTxt }}>{item.Name}</Text>
+                                        <Text style={{ ...Styles.feedTxt }}>{item.Phone}</Text>
+                                    </View>
+                                    <Text style={{ ...Styles.nameTxt }}>Disease: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.diseaseName}</Text></Text>
+                                    <View style={{ ...Styles.row, justifyContent: 'space-between' }}>
+                                        <Text style={{ ...Styles.nameTxt }}>Money Required: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.medicalAmount}</Text></Text>
+                                    </View>
+                                        <Text style={{ ...Styles.nameTxt }}>Hospital Address: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.hospitalAddress}</Text></Text>
+                                    <View style={{ ...Styles.row, }}>
+                                        <SVGS.location width={WP(4)} height={WP(4)} style={{  }} />
+                                        <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold, paddingLeft: WP(3) }}>{item?.district}</Text>
+                                    </View>
+                                    <Text style={{ ...Styles.nameTxt }}>{item?.Description}</Text>
+                                </View>
+                        </View>
+                    )}
+                </ScrollView>
+                }
+                    {/* </ScrollView> */}
         </SafeAreaView>
     )
 }

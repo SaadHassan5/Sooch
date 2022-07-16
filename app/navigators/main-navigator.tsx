@@ -18,6 +18,7 @@ import Volunteer from '../screens/Volunteer/volunteer';
 import Donation from '../screens/Donations/Donation';
 import LoginPhn from '../screens/LoginPhone/LoginPhn';
 import OptConfirmation from '../screens/OtpConfirmation/OtpConfirmation';
+import showVolunteers from '../screens/Volunteer/showVolunteers';
 
 const MyStack = createStackNavigator();
 class Stack extends Component {
@@ -39,6 +40,7 @@ class Stack extends Component {
           <MyStack.Screen name="StudentHelp" component={StudentHelp} />
           <MyStack.Screen name="Volunteer" component={Volunteer} />
           <MyStack.Screen name="Donation" component={Donation} />
+          <MyStack.Screen name="showVolunteers" component={showVolunteers} />
         </MyStack.Navigator>
     )
   }

@@ -61,7 +61,7 @@ const Money = (props) => {
                                         }
                                     </View>
                                     <View style={{ ...Styles.row, }}>
-                                        <SVGS.location width={WP(4)} height={WP(4)} style={{ marginTop: HP(2) }} />
+                                        <SVGS.location width={WP(4)} height={WP(4)} style={{  }} />
                                         <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold, paddingLeft: WP(3) }}>{item?.district}</Text>
                                     </View>
                                     <Text style={{ ...Styles.nameTxt }}>{item?.Description}</Text>

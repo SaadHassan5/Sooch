@@ -64,7 +64,7 @@ const Blood = (props) => {
                                         <Text style={{ ...Styles.nameTxt }}>CNIC: <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold }}>{item?.CNIC}</Text></Text>
                                     } */}
                                     <View style={{ ...Styles.row, }}>
-                                        <SVGS.location width={WP(4)} height={WP(4)} style={{ marginTop: HP(2) }} />
+                                        <SVGS.location width={WP(4)} height={WP(4)} style={{  }} />
                                         <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.bold, paddingLeft: WP(3) }}>{item?.district}</Text>
                                         <TouchableOpacity onPress={()=>{openLoc(item)}}>
                                             <Text style={{ ...Styles.nameTxt, fontFamily: fontFamily.light, paddingLeft: WP(7), textDecorationLine: "underline" }}>Get Directions</Text>

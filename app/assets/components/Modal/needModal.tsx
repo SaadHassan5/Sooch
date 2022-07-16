@@ -73,11 +73,11 @@ export class NeedModal extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.props.onPressOther} style={{ ...Styles.row, marginTop: HP(1.5) }}>
                             <RadioButton
-                                status={this.props.need == 'Other' ? 'checked' : 'unchecked'}
+                                status={this.props.need == 'Medical' ? 'checked' : 'unchecked'}
                                 color={'#673AB7'}
                                 onPress={this.props.onPressOther}
                             />
-                            <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Other</Text>
+                            <Text style={{ ...Styles.txt, color: 'black', fontSize: 16, paddingLeft: WP(3) }}>Medical</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{...Styles.shadow,borderTopWidth:1,borderColor:'transparent' }}>

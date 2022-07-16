@@ -20,6 +20,9 @@ import Icon from "react-native-vector-icons/MaterialIcons"
 import { VoltModal } from '../../assets/components/Modal/VolModal';
 import { connect } from 'react-redux';
 import { ChangeBackgroundColor, GetUser, GetVolun } from '../../root/action';
+import DocumentPicker from "react-native-document-picker";
+import UploadIcon from "react-native-vector-icons/MaterialIcons"
+
 const Add = (props) => {
     const [need, setNeed] = useState("Blood")
     const [location, setLocation] = useState(false)
@@ -36,12 +39,16 @@ const Add = (props) => {
     const [cnic, setCnic] = useState("")
     const [blood, setBlood] = useState("Any")
     const [money, setMoney] = useState("")
+    const [MedMoney, setMedMoney] = useState("")
+    const [hosAdd, setHosAdd] = useState("")
+    const [diseaseName, setDiseaseName] = useState("")
     const [account, setAccount] = useState("")
     const [accountName, setAccountName] = useState("")
     const [bottles, setBottles] = useState(1)
     const [desc, setDesc] = useState("")
     const [exist, setExist] = useState(false)
     const [donors, setDonors] = useState([])
+    const [doc, setDoc] = useState('');
     const [position, setPosition] = useState({
         latitude: 10,
         longitude: 10,
@@ -96,6 +103,14 @@ const Add = (props) => {
                             Institue: institue,
                         }
                     }
+                    else if (need == "Medical") {
+                        obj = {
+                            ...obj,
+                            hospitalAddress: hosAdd,
+                            diseaseName: diseaseName,
+                            medicalAmount: MedMoney,
+                        }
+                    }
                     console.log(obj);
                     if (volt != "") {
                         await saveData("Volunteer", volt?.email, {
@@ -112,6 +127,7 @@ const Add = (props) => {
                         setDonMod(true)
 
                     }
+
                 }
             })
         }
@@ -165,6 +181,35 @@ const Add = (props) => {
         })
 
     }
+    const pickDoc = async () => {
+        try {
+            const results = await DocumentPicker.pick({
+                type: [DocumentPicker.types.allFiles],
+                //There can me more options as well find above
+            });
+            for (const res of results) {
+                //Printing the log realted to the file
+                console.log('res : ' + JSON.stringify(res));
+                console.log('URI : ' + res.uri);
+                console.log('Type : ' + res.type);
+                console.log('File Name : ' + res.name);
+                console.log('File Size : ' + res.size);
+                setDoc('' + res.name);
+            }
+            //Setting the state to show multiple file attributes
+            // this.setState({ multipleFile: results });
+        } catch (err) {
+            //Handling any exception (If any)
+            if (DocumentPicker.isCancel(err)) {
+                //If user canceled the document selection
+                //   alert('Canceled from multiple doc picker');
+            } else {
+                //For Unknown Error
+                alert('Unknown Error: ' + JSON.stringify(err));
+                throw err;
+            }
+        }
+    }
     useEffect(() => {
     }, [])
     const checkMoney = (mon) => {
@@ -173,9 +218,10 @@ const Add = (props) => {
         }
         else {
             // toastPrompt("imit!!")
-            setMoney(mon);
+            setMedMoney(mon);
         }
     }
+
     return (
         <SafeAreaView style={{ ...Styles.container, paddingVertical: HP(1) }}>
             <ScrollView contentContainerStyle={{ paddingBottom: HP(20) }}>
@@ -230,7 +276,6 @@ const Add = (props) => {
                             </View>
                         </View>
                     }
-                    <Text style={{ ...Styles.nameTxt, marginTop: HP(3) }}>Location<Text style={{ color: 'red' }}>*</Text></Text>
                     {need == 'Blood' &&
                         <TouchableOpacity onPress={() => openLocation()} style={{ marginTop: HP(2), justifyContent: 'center' }}>
                             <TextInput editable={false} placeholderTextColor={"#B7C1DF"} placeholder={"Click to give your current location"} style={{ ...Styles.inp, backgroundColor: location ? "#91ADFE" : "#fff" }} />
@@ -239,6 +284,33 @@ const Add = (props) => {
                             }
                         </TouchableOpacity>
                     }
+                    {need == "Medical" &&
+                        <View>
+                            <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Disease Name</Text>
+                            <View style={{ marginTop: HP(1) }}>
+                                <Input onChange={(e) => setDiseaseName(e)} placeTxt={"Enter Disease Name"} />
+                            </View>
+                            <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Hospital Address<Text style={{ color: 'red' }}>*</Text></Text>
+                            <View style={{ marginTop: HP(1) }}>
+                                <Input onChange={(e) => { setHosAdd(e) }} placeTxt={"Enter Address"} />
+                            </View>
+                            <Text style={{ ...Styles.nameTxt, marginTop: HP(2) }}>Amount<Text style={{ color: 'red' }}>*</Text></Text>
+                            <View style={{ marginTop: HP(1) }}>
+                                <Input value={MedMoney} keyboardType={"number-pad"} onChange={(e) => { checkMoney(e) }} placeTxt={"Enter Required Amount"} />
+                                <Text style={{ ...Styles.forgotTxt, textAlign: 'right', color: palette.lightGrey }}>Limit 100,000</Text>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => pickDoc()} style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', }}>
+                                    {doc ?
+                                        <Text style={{ ...Styles.firstTxt }}>{doc}</Text>
+                                        :
+                                        <Text style={{ ...Styles.firstTxt }}>Upload Health Certificate</Text>
+                                    }
+                                    <UploadIcon name='file-upload' color={'black'} size={25} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>}
+                    <Text style={{ ...Styles.nameTxt, marginTop: HP(3) }}>Location<Text style={{ color: 'red' }}>*</Text></Text>
                     <TouchableOpacity onPress={() => setlocMod(true)} style={{ marginTop: HP(2), justifyContent: 'center' }}>
                         <Input editable value={loc} placeTxt={loc ? loc : "Select District"} />
                         <SVGS.downArrow style={{ position: 'absolute', right: WP(10), }} />
@@ -249,7 +321,7 @@ const Add = (props) => {
                     </View>
                     <Text style={{ ...Styles.nameTxt, marginTop: HP(3) }}>Volunteer Reference</Text>
                     <TouchableOpacity onPress={() => setVolMod(true)} style={{ marginTop: HP(2), justifyContent: 'center' }}>
-                        <Input editable value={volt?.name} placeTxt={"Select Volunteer"} />
+                        {/* <Input editable value={volt?.name} placeTxt={"Select Volunteer"} /> */}
                         <SVGS.downArrow style={{ position: 'absolute', right: WP(10), }} />
                     </TouchableOpacity>
                     <View style={{ marginTop: HP(5) }}>
@@ -262,7 +334,7 @@ const Add = (props) => {
                     <ActivityIndicator size={"large"} color="#00ff00" />
                 </View>
             }
-            <NeedModal mod={needMod} onPress={() => setNeedMod(false)} need={need} onPressBlood={() => setNeed('Blood')} onPressMoney={() => setNeed('Money')} onPressEdu={() => setNeed('Education')} onPressOther={() => setNeed('Other')} />
+            <NeedModal mod={needMod} onPress={() => setNeedMod(false)} need={need} onPressBlood={() => setNeed('Blood')} onPressMoney={() => setNeed('Money')} onPressEdu={() => setNeed('Education')} onPressOther={() => setNeed('Medical')} />
             <CityModal mod={locMod} setLocation={setLoc} Location={loc} onPress={() => setlocMod(false)} setMod={setlocMod} />
             <DonorList mod={donMod} donors={donors} exist={exist} onPress={() => setDonMod(false)} />
             <VoltModal mod={volMod} onPress={() => setVolMod(false)} setMod={setVolMod} setVolt={setVolt} voltA={props.volunteer} />

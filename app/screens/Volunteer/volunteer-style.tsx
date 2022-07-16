@@ -29,5 +29,24 @@ export const VolunteerStyles = StyleSheet.create({
         color:palette.black,
         height:55,
         // width: '100%',
+      },
+      card:{
+        width:WP(80),
+        paddingVertical:HP(2),
+        backgroundColor:palette.lighBlueBtn,
+        paddingHorizontal:WP(5)
+      },
+      shadow: {
+        shadowColor: 'black',
+        shadowOffset: {
+          width: 0,
+          height: 10,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5, elevation: 5,
+      },
+      row:{
+        flexDirection:'row',
+        alignItems:'center',
       }
 })

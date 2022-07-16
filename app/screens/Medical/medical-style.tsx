@@ -42,5 +42,26 @@ export const MedicalStyles = StyleSheet.create({
         color:palette.black,
         height:55,
         // width: '100%',
-      }
+      },
+      
+    cardView: {
+        backgroundColor: 'white',
+        marginTop: HP(1),
+        padding: WP(3),
+        borderRadius: WP(4),
+        marginHorizontal: WP(7)
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    shadow: {
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5, elevation: 5,
+    },
 })
