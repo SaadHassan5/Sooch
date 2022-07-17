@@ -24,7 +24,7 @@ const UserInfo = (props) => {
     const [lastMod, setLastMod] = useState(false)
     const [flag, setFlag] = useState('🇵🇰')
     const [gender, setGender] = useState('Male')
-    const [phone, setPhone] = useState((props.route.params?.number.split('92'))[1]||'')
+    const [phone, setPhone] = useState(props.route.params?.number?(props.route.params?.number?.split('92'))[1]:'')
     const [first, setFirst] = useState('')
     const [last, setLast] = useState('')
     const [blood, setBlood] = useState('')
